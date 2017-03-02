@@ -1,4 +1,5 @@
 #### SF是一套基于ASP.NET Core MVC+EFCore+Bootstrap开发出来的框架，源代码完全开源！
+#### SF的宗旨：学习并融入新技术新思想
 #### SF 官方 QQ 交流群：306818375
 #### 在线体验地址[SF官方演示地址](http://www.mayisite.pro:8080)
 
