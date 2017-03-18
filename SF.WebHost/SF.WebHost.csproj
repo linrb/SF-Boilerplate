@@ -1583,6 +1583,7 @@
     <Content Include="wwwroot\user-content\.gitignore" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="LinqKit.Core" Version="1.1.8" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
