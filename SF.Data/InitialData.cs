@@ -37,9 +37,10 @@ namespace SF.Data
         {
             var adminUser = new UserEntity();
             adminUser.Email = "admin@admin.com";
-            adminUser.NormalizedEmail = adminUser.Email.ToUpperInvariant();
+            adminUser.UserName = "Administrator";
+            adminUser.NormalizedEmail = adminUser.UserName.ToUpperInvariant();
             adminUser.NormalizedUserName = adminUser.NormalizedEmail;
-            adminUser.UserName = "admin";
+            adminUser.DisplayName = "管理员";
             adminUser.CreatedBy = "admin";
             adminUser.CreatedOn = DateTimeOffset.Now;
             adminUser.UpdatedBy = "admin";
@@ -60,7 +61,7 @@ namespace SF.Data
             var role = new RoleEntity();
             role.Name = "Administrators";
             role.NormalizedName = role.Name.ToUpperInvariant();
-            role.Description ="超级管理员";
+            role.Description = "超级管理员";
             return role;
         }
 

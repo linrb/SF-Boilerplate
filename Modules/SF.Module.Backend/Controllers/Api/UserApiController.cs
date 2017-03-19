@@ -290,9 +290,14 @@ namespace SF.Module.Backend.Controllers
         {
             if (userId == "Administrator")
             {
-                throw new Exception("当前账户不禁用");
+                return Error("当前账户不禁用。");
+               // throw new Exception("当前账户不禁用");
             }
             var user = await _userManager.FindByNameAsync(userId);
+            if (user == null)
+            {
+                return Error("用户不存在。");
+            }
             user.IsLockedOut = false;
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
@@ -310,6 +315,10 @@ namespace SF.Module.Backend.Controllers
         public async Task<ActionResult> EnabledAccount(string userId)
         {
             var user = await _userManager.FindByNameAsync(userId);
+            if (user == null)
+            {
+                return Error("用户不存在。");
+            }
             user.IsLockedOut = true;
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
