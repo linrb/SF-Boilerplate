@@ -31,7 +31,7 @@ namespace SF.WebHost
         {
 
             var builder = new DbContextOptionsBuilder<CoreDbContext>();
-            builder.UseSqlServer("Server=192.168.1.100;Database=SF_Team_2017;uid=sa;pwd=123.com.cn;Trusted_Connection=True;MultipleActiveResultSets=true;Integrated Security=false;"
+            builder.UseSqlServer("Server=192.168.1.101;Database=SF_Team_2017;uid=sa;pwd=123.com.cn;Trusted_Connection=True;MultipleActiveResultSets=true;Integrated Security=false;"
                  , b => b.MigrationsAssembly("SF.WebHost"));
 
             return new CoreDbContext(builder.Options);

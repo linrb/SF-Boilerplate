@@ -59,8 +59,8 @@ namespace SF.Data
         {
             var role = new RoleEntity();
             role.Name = "Administrators";
-            role.NormalizedName = "Administrators";
-            role.Description = role.Name.ToUpperInvariant();
+            role.NormalizedName = role.Name.ToUpperInvariant();
+            role.Description ="超级管理员";
             return role;
         }
 
@@ -68,8 +68,8 @@ namespace SF.Data
         {
             var role = new RoleEntity();
             role.Name = "AuthenticatedUsers";
-            role.NormalizedName = "Authenticated Users";
-            role.Description = role.Name.ToUpperInvariant();
+            role.NormalizedName = role.Name.ToUpperInvariant();
+            role.Description = "授权用户";
 
             return role;
         }
@@ -78,8 +78,8 @@ namespace SF.Data
         {
             var role = new RoleEntity();
             role.Name = "ContentAdministrators";
-            role.NormalizedName = "Content Administrators";
-            role.Description = role.Name.ToUpperInvariant();
+            role.NormalizedName = role.Name.ToUpperInvariant();
+            role.Description = "信息管理员";
 
             return role;
         }

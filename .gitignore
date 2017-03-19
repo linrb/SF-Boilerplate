@@ -272,3 +272,5 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+/SF.WebHost/Logs/2017-03-19
+/SF.WebHost/Logs/2017-03-19

@@ -120,8 +120,8 @@ namespace SF.WebHost
 
             var serviceProvider = services.BuildServiceProvider();
 
-            var sfStarter = serviceProvider.GetServices<ISFStarter>();
-            sfStarter.Each(x => { x.Run(); });
+            var sfStarter = serviceProvider.GetService<ISFStarter>();
+            sfStarter.Run();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -163,7 +163,7 @@ namespace SF.WebHost
                 null : this.serviceProvider.GetService<IHostingEnvironment>().ContentRootPath + extensionsPath);
             ExtensionManager.SetModules(modules.ToList());
             //添加全局模块
-            ExtensionManager.SetExtension(new GobalExtension());
+           // ExtensionManager.SetExtension(new GobalExtension());
 
             Console.WriteLine(modules.ToList().Count);
         }

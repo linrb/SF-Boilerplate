@@ -125,7 +125,7 @@ namespace SF.Data
                             await db.SaveChangesAsync();
 
                             role = await db.Roles.SingleOrDefaultAsync(
-                                 x => x.SiteId == site.Id && x.Description == "Authenticated Users".ToUpperInvariant());
+                                 x => x.SiteId == site.Id && x.NormalizedName == "AuthenticatedUsers".ToUpperInvariant());
 
                             if (role != null)
                             {

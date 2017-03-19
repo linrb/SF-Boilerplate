@@ -14,7 +14,7 @@ namespace SF.WebHost.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
+                .HasAnnotation("ProductVersion", "1.1.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<long>", b =>
@@ -116,7 +116,47 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Core_AutoHistory");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.AddressEntity", b =>
+            modelBuilder.Entity("SF.Core.Infrastructure.Plugins.Models.InstalledPlugin", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Active");
+
+                    b.Property<string>("CreatedBy");
+
+                    b.Property<DateTimeOffset>("CreatedOn");
+
+                    b.Property<DateTime>("DateActivated");
+
+                    b.Property<DateTime>("DateDeactivated");
+
+                    b.Property<DateTime>("DateInstalled");
+
+                    b.Property<string>("DeletedBy");
+
+                    b.Property<DateTimeOffset?>("DeletedOn");
+
+                    b.Property<bool>("Installed");
+
+                    b.Property<string>("PluginAssemblyName");
+
+                    b.Property<string>("PluginName");
+
+                    b.Property<string>("PluginVersion");
+
+                    b.Property<int>("SortIndex");
+
+                    b.Property<string>("UpdatedBy");
+
+                    b.Property<DateTimeOffset>("UpdatedOn");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Core_InstalledPlugin");
+                });
+
+            modelBuilder.Entity("SF.Entitys.AddressEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -165,7 +205,7 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Entitys_AddressEntity");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.CountryEntity", b =>
+            modelBuilder.Entity("SF.Entitys.CountryEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -191,7 +231,7 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Entitys_CountryEntity");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.DistrictEntity", b =>
+            modelBuilder.Entity("SF.Entitys.DistrictEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -225,7 +265,7 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Entitys_DistrictEntity");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.EntityType", b =>
+            modelBuilder.Entity("SF.Entitys.EntityType", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -255,7 +295,7 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Entitys_EntityType");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.MediaEntity", b =>
+            modelBuilder.Entity("SF.Entitys.MediaEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -287,7 +327,7 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Entitys_MediaEntity");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.ModuleEntity", b =>
+            modelBuilder.Entity("SF.Entitys.ModuleEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -350,7 +390,7 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Core_Module");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.NotificationEntity", b =>
+            modelBuilder.Entity("SF.Entitys.NotificationEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -416,7 +456,7 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Entitys_NotificationEntity");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.NotificationTemplateEntity", b =>
+            modelBuilder.Entity("SF.Entitys.NotificationTemplateEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -465,7 +505,7 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Entitys_NotificationTemplateEntity");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.PermissionEntity", b =>
+            modelBuilder.Entity("SF.Entitys.PermissionEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -504,7 +544,7 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Core_Permission");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.RoleEntity", b =>
+            modelBuilder.Entity("SF.Entitys.RoleEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -527,12 +567,13 @@ namespace SF.WebHost.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
+                        .IsUnique()
                         .HasName("RoleNameIndex");
 
                     b.ToTable("Core_Role");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.RoleModuleEntity", b =>
+            modelBuilder.Entity("SF.Entitys.RoleModuleEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -569,7 +610,7 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Core_RoleModule");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.RolePermissionEntity", b =>
+            modelBuilder.Entity("SF.Entitys.RolePermissionEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -606,7 +647,7 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Core_RolePermission");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.SettingEntity", b =>
+            modelBuilder.Entity("SF.Entitys.SettingEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -656,7 +697,7 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Core_SettingValue");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.SettingValueEntity", b =>
+            modelBuilder.Entity("SF.Entitys.SettingValueEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -704,7 +745,7 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Entitys_SettingValueEntity");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.SiteHost", b =>
+            modelBuilder.Entity("SF.Entitys.SiteHost", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -738,7 +779,7 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Core_SiteHost");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.SiteSettings", b =>
+            modelBuilder.Entity("SF.Entitys.SiteSettings", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -971,7 +1012,7 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Core_SiteSettings");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.StateOrProvinceEntity", b =>
+            modelBuilder.Entity("SF.Entitys.StateOrProvinceEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -1003,7 +1044,7 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Entitys_StateOrProvinceEntity");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.UrlSlugEntity", b =>
+            modelBuilder.Entity("SF.Entitys.UrlSlugEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -1035,7 +1076,7 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Entitys_UrlSlugEntity");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.UserAddressEntity", b =>
+            modelBuilder.Entity("SF.Entitys.UserAddressEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -1071,7 +1112,7 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Entitys_UserAddressEntity");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.UserEntity", b =>
+            modelBuilder.Entity("SF.Entitys.UserEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -1195,6 +1236,8 @@ namespace SF.WebHost.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
+                    b.Property<string>("UserNo");
+
                     b.Property<int?>("UserOnLine");
 
                     b.Property<string>("UserType")
@@ -1220,7 +1263,7 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Core_User");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.UserLocation", b =>
+            modelBuilder.Entity("SF.Entitys.UserLocation", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -1293,7 +1336,7 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Core_UserLocation");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.UserRoleEntity", b =>
+            modelBuilder.Entity("SF.Entitys.UserRoleEntity", b =>
                 {
                     b.Property<long>("UserId");
 
@@ -1612,7 +1655,7 @@ namespace SF.WebHost.Migrations
 
                     b.Property<DateTimeOffset?>("DeletedOn");
 
-                    b.Property<int?>("DepartmentId");
+                    b.Property<long?>("DepartmentId");
 
                     b.Property<string>("Description")
                         .HasMaxLength(280);
@@ -1625,7 +1668,7 @@ namespace SF.WebHost.Migrations
                     b.Property<string>("FullName")
                         .HasMaxLength(127);
 
-                    b.Property<int?>("OrganizeId");
+                    b.Property<long?>("OrganizeId");
 
                     b.Property<DateTime?>("OverdueTime");
 
@@ -1819,7 +1862,7 @@ namespace SF.WebHost.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<long>", b =>
                 {
-                    b.HasOne("SF.Core.Entitys.RoleEntity")
+                    b.HasOne("SF.Entitys.RoleEntity")
                         .WithMany("Claims")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -1827,7 +1870,7 @@ namespace SF.WebHost.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<long>", b =>
                 {
-                    b.HasOne("SF.Core.Entitys.UserEntity")
+                    b.HasOne("SF.Entitys.UserEntity")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -1835,108 +1878,108 @@ namespace SF.WebHost.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<long>", b =>
                 {
-                    b.HasOne("SF.Core.Entitys.UserEntity")
+                    b.HasOne("SF.Entitys.UserEntity")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.AddressEntity", b =>
+            modelBuilder.Entity("SF.Entitys.AddressEntity", b =>
                 {
-                    b.HasOne("SF.Core.Entitys.CountryEntity", "Country")
+                    b.HasOne("SF.Entitys.CountryEntity", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId");
 
-                    b.HasOne("SF.Core.Entitys.DistrictEntity", "District")
+                    b.HasOne("SF.Entitys.DistrictEntity", "District")
                         .WithMany()
                         .HasForeignKey("DistrictId");
 
-                    b.HasOne("SF.Core.Entitys.StateOrProvinceEntity", "StateOrProvince")
+                    b.HasOne("SF.Entitys.StateOrProvinceEntity", "StateOrProvince")
                         .WithMany()
                         .HasForeignKey("StateOrProvinceId");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.DistrictEntity", b =>
+            modelBuilder.Entity("SF.Entitys.DistrictEntity", b =>
                 {
-                    b.HasOne("SF.Core.Entitys.StateOrProvinceEntity", "StateOrProvince")
+                    b.HasOne("SF.Entitys.StateOrProvinceEntity", "StateOrProvince")
                         .WithMany()
                         .HasForeignKey("StateOrProvinceId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.RoleModuleEntity", b =>
+            modelBuilder.Entity("SF.Entitys.RoleModuleEntity", b =>
                 {
-                    b.HasOne("SF.Core.Entitys.ModuleEntity", "Module")
+                    b.HasOne("SF.Entitys.ModuleEntity", "Module")
                         .WithMany("RoleModules")
                         .HasForeignKey("ModuleId");
 
-                    b.HasOne("SF.Core.Entitys.RoleEntity", "Role")
+                    b.HasOne("SF.Entitys.RoleEntity", "Role")
                         .WithMany("RoleModules")
                         .HasForeignKey("RoleId");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.RolePermissionEntity", b =>
+            modelBuilder.Entity("SF.Entitys.RolePermissionEntity", b =>
                 {
-                    b.HasOne("SF.Core.Entitys.PermissionEntity", "Permission")
+                    b.HasOne("SF.Entitys.PermissionEntity", "Permission")
                         .WithMany("RolePermissions")
                         .HasForeignKey("PermissionId");
 
-                    b.HasOne("SF.Core.Entitys.RoleEntity", "Role")
+                    b.HasOne("SF.Entitys.RoleEntity", "Role")
                         .WithMany("RolePermissions")
                         .HasForeignKey("RoleId");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.SettingValueEntity", b =>
+            modelBuilder.Entity("SF.Entitys.SettingValueEntity", b =>
                 {
-                    b.HasOne("SF.Core.Entitys.SettingEntity", "Setting")
+                    b.HasOne("SF.Entitys.SettingEntity", "Setting")
                         .WithMany("SettingValues")
                         .HasForeignKey("SettingId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.StateOrProvinceEntity", b =>
+            modelBuilder.Entity("SF.Entitys.StateOrProvinceEntity", b =>
                 {
-                    b.HasOne("SF.Core.Entitys.CountryEntity", "Country")
+                    b.HasOne("SF.Entitys.CountryEntity", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.UrlSlugEntity", b =>
+            modelBuilder.Entity("SF.Entitys.UrlSlugEntity", b =>
                 {
-                    b.HasOne("SF.Core.Entitys.EntityType", "EntityType")
+                    b.HasOne("SF.Entitys.EntityType", "EntityType")
                         .WithMany()
                         .HasForeignKey("EntityTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.UserAddressEntity", b =>
+            modelBuilder.Entity("SF.Entitys.UserAddressEntity", b =>
                 {
-                    b.HasOne("SF.Core.Entitys.AddressEntity", "Address")
+                    b.HasOne("SF.Entitys.AddressEntity", "Address")
                         .WithMany("UserAddresses")
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("SF.Core.Entitys.UserEntity", "User")
+                    b.HasOne("SF.Entitys.UserEntity", "User")
                         .WithMany("UserAddresses")
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.UserEntity", b =>
+            modelBuilder.Entity("SF.Entitys.UserEntity", b =>
                 {
-                    b.HasOne("SF.Core.Entitys.UserAddressEntity", "CurrentShippingAddress")
+                    b.HasOne("SF.Entitys.UserAddressEntity", "CurrentShippingAddress")
                         .WithMany()
                         .HasForeignKey("CurrentShippingAddressId");
                 });
 
-            modelBuilder.Entity("SF.Core.Entitys.UserRoleEntity", b =>
+            modelBuilder.Entity("SF.Entitys.UserRoleEntity", b =>
                 {
-                    b.HasOne("SF.Core.Entitys.RoleEntity", "Role")
+                    b.HasOne("SF.Entitys.RoleEntity", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("SF.Core.Entitys.UserEntity", "User")
+                    b.HasOne("SF.Entitys.UserEntity", "User")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
