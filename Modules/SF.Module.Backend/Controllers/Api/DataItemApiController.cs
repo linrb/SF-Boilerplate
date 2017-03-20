@@ -28,6 +28,8 @@ using SF.Module.Backend.Domain.DataItem.ViewModel;
 using SF.Module.Backend.Domain.DataItem.Service;
 using SF.Module.Backend.Domain.DataItem.Rule;
 using SF.Module.Backend.Data.Entitys;
+using System.Threading.Tasks;
+using System.Text;
 
 namespace SF.Module.Backend.Controllers
 {
@@ -208,6 +210,38 @@ namespace SF.Module.Backend.Controllers
 
             response.Reader.RepeatItems = false;
             return new JqGridJsonResult(response);
+        }
+
+        /// <summary>
+        /// 区域列表 
+        /// </summary>
+        /// <param name="value">当前主键</param>
+        /// <returns>返回树形Json</returns>
+        [Route("GetTreeJson")]
+        public    IActionResult GetTreeJson(long? value)
+        {
+           
+            var filterdata =   _dataItemService.GetChildren(value ?? 0,0);
+            StringBuilder sb = new StringBuilder();
+            sb.Append("[");
+            if (filterdata.Count > 0)
+            {
+                foreach (DataItemViewModel item in filterdata)
+                {
+                    bool hasChildren = _dataItemService.GetChildren(item.Id,0).Any() ? true : false;
+                    sb.Append("{");
+                    sb.Append("\"id\":\"" + item.Id + "\",");
+                    sb.Append("\"text\":\"" + item.ItemName + "\",");
+                    sb.Append("\"value\":\"" + item.Id + "\",");
+                    sb.Append("\"isexpand\":false,");
+                    sb.Append("\"complete\":false,");
+                    sb.Append("\"hasChildren\":" + hasChildren.ToString().ToLower() + "");
+                    sb.Append("},");
+                }
+                sb = sb.Remove(sb.Length - 1, 1);
+            }
+            sb.Append("]");
+            return Content(sb.ToString());
         }
         #endregion
 

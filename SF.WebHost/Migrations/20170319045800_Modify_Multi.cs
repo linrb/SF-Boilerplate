@@ -1356,6 +1356,7 @@ namespace SF.WebHost.Migrations
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.Sql(File.ReadAllText("config/sql/area.sql"));
+            migrationBuilder.Sql(File.ReadAllText("config/sql/base.sql"));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

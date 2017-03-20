@@ -15,7 +15,7 @@ namespace SF.Module.Backend.Domain.DataItem.Service
     /// </summary>
     public interface IDataItemService : IBaseService
     {
-        List<DataItemViewModel> GetChildren(int id, int rootDataItemId);
+        List<DataItemViewModel> GetChildren(long id, int rootDataItemId);
 
         List<DataItemEntity> GetAlls();
 

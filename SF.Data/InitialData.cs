@@ -40,6 +40,7 @@ namespace SF.Data
             adminUser.UserName = "Administrator";
             adminUser.NormalizedEmail = adminUser.UserName.ToUpperInvariant();
             adminUser.NormalizedUserName = adminUser.NormalizedEmail;
+            adminUser.IsLockedOut = false;
             adminUser.DisplayName = "管理员";
             adminUser.CreatedBy = "admin";
             adminUser.CreatedOn = DateTimeOffset.Now;
@@ -60,6 +61,7 @@ namespace SF.Data
         {
             var role = new RoleEntity();
             role.Name = "Administrators";
+            role.Enabled = 1;
             role.NormalizedName = role.Name.ToUpperInvariant();
             role.Description = "超级管理员";
             return role;
@@ -68,6 +70,7 @@ namespace SF.Data
         public static RoleEntity BuildAuthenticatedRole()
         {
             var role = new RoleEntity();
+            role.Enabled = 1;
             role.Name = "AuthenticatedUsers";
             role.NormalizedName = role.Name.ToUpperInvariant();
             role.Description = "授权用户";
@@ -78,6 +81,7 @@ namespace SF.Data
         public static RoleEntity BuildContentAdminsRole()
         {
             var role = new RoleEntity();
+            role.Enabled = 1;
             role.Name = "ContentAdministrators";
             role.NormalizedName = role.Name.ToUpperInvariant();
             role.Description = "信息管理员";

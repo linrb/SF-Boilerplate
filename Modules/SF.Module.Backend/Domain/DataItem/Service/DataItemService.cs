@@ -47,7 +47,7 @@ namespace SF.Module.Backend.Domain.DataItem.Service
         /// <param name="id"></param>
         /// <param name="rootDataItemId"></param>
         /// <returns></returns>
-        public List<DataItemViewModel> GetChildren(int id, int rootDataItemId)
+        public List<DataItemViewModel> GetChildren(long id, int rootDataItemId)
         {
             var qry = GetAlls().AsQueryable();
 

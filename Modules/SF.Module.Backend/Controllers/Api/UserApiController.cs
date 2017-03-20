@@ -147,8 +147,8 @@ namespace SF.Module.Backend.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync(UserViewModel model)
         {
-            if (!ModelState.IsValid)
-                return BadRequestResult(ModelState);
+            //if (!ModelState.IsValid)
+            //    return BadRequestResult(ModelState);
             try
             {
                 var entity = _crudDtoMapper.MapDtoToEntity(model);
@@ -175,8 +175,8 @@ namespace SF.Module.Backend.Controllers
         [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateAsync(int id, UserViewModel model)
         {
-            if (!ModelState.IsValid)
-                return BadRequestResult(ModelState);
+            //if (!ModelState.IsValid)
+            //    return BadRequestResult(ModelState);
 
             try
             {
@@ -291,7 +291,7 @@ namespace SF.Module.Backend.Controllers
             if (userId == "Administrator")
             {
                 return Error("当前账户不禁用。");
-               // throw new Exception("当前账户不禁用");
+                // throw new Exception("当前账户不禁用");
             }
             var user = await _userManager.FindByNameAsync(userId);
             if (user == null)
