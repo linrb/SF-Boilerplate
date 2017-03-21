@@ -52,6 +52,6 @@ SimpleFramework is licensed under the Apache 2.0 license.
 #### Window后台主页
 ![Window后台主页](https://git.oschina.net/sframework/SF-Boilerplate/raw/master/miscellaneous/SFInfo.png)
 #### Linux后台主页
-![Linux后台主页](https://git.oschina.net/sframework/SF-Boilerplate/raw/master/miscellaneous/sf_ubuntu.jpg)
+![Linux后台主页](http://git.oschina.net/sframework/SF-Boilerplate/raw/master/miscellaneous/sf_ubuntu.jpg)
 ![字典分类管理](https://git.oschina.net/sframework/SF-Boilerplate//raw/master/miscellaneous/SF_DataItem.png)
 
