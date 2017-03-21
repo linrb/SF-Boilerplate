@@ -10,6 +10,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\lib\bootstrap\**" />
+    <Compile Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
+    <Compile Remove="wwwroot\lib\jquery-validation\**" />
+    <Compile Remove="wwwroot\lib\jquery\**" />
+    <Content Remove="wwwroot\lib\bootstrap\**" />
+    <Content Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
+    <Content Remove="wwwroot\lib\jquery-validation\**" />
+    <Content Remove="wwwroot\lib\jquery\**" />
+    <EmbeddedResource Remove="wwwroot\lib\bootstrap\**" />
+    <EmbeddedResource Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
+    <EmbeddedResource Remove="wwwroot\lib\jquery-validation\**" />
+    <EmbeddedResource Remove="wwwroot\lib\jquery\**" />
+    <None Remove="wwwroot\lib\bootstrap\**" />
+    <None Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
+    <None Remove="wwwroot\lib\jquery-validation\**" />
+    <None Remove="wwwroot\lib\jquery\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="node_modules\ansi-regex\package.json" />
     <Content Include="node_modules\ansi-styles\package.json" />
     <Content Include="node_modules\archy\package.json" />
@@ -499,24 +518,6 @@
     <Content Include="wwwroot\lib\bootstrap-timepicker.js" />
     <Content Include="wwwroot\lib\bootstrap.js" />
     <Content Include="wwwroot\lib\bootstrap.min.js" />
-    <Content Include="wwwroot\lib\bootstrap\.bower.json" />
-    <Content Include="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.css" />
-    <Content Include="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.css.map" />
-    <Content Include="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.min.css" />
-    <Content Include="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.min.css.map" />
-    <Content Include="wwwroot\lib\bootstrap\dist\css\bootstrap.css" />
-    <Content Include="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
-    <Content Include="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css" />
-    <Content Include="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
-    <Content Include="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
-    <Content Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
-    <Content Include="wwwroot\lib\bootstrap\dist\js\npm.js" />
-    <Content Include="wwwroot\lib\bootstrap\LICENSE" />
     <Content Include="wwwroot\lib\cookie\jquery.cookie.js" />
     <Content Include="wwwroot\lib\dialog\default\icon-ext.png" />
     <Content Include="wwwroot\lib\dialog\default\icon.png" />
@@ -1102,25 +1103,11 @@
     <Content Include="wwwroot\lib\jquery-ui\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="wwwroot\lib\jquery-ui\jquery-ui.min.css" />
     <Content Include="wwwroot\lib\jquery-ui\jquery-ui.min.js" />
-    <Content Include="wwwroot\lib\jquery-validation-unobtrusive\.bower.json" />
-    <Content Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
-    <Content Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
-    <Content Include="wwwroot\lib\jquery-validation\.bower.json" />
-    <Content Include="wwwroot\lib\jquery-validation\dist\additional-methods.js" />
-    <Content Include="wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
-    <Content Include="wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
-    <Content Include="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
-    <Content Include="wwwroot\lib\jquery-validation\LICENSE.md" />
     <Content Include="wwwroot\lib\jquery.fileupload.js" />
     <Content Include="wwwroot\lib\jquery.jquery-dotimeout.js" />
     <Content Include="wwwroot\lib\jquery.lazyload.min.js" />
     <Content Include="wwwroot\lib\jquery.md5.js" />
     <Content Include="wwwroot\lib\jquery.tinyscrollbar.js" />
-    <Content Include="wwwroot\lib\jquery\.bower.json" />
-    <Content Include="wwwroot\lib\jquery\dist\jquery.js" />
-    <Content Include="wwwroot\lib\jquery\dist\jquery.min.js" />
-    <Content Include="wwwroot\lib\jquery\dist\jquery.min.map" />
-    <Content Include="wwwroot\lib\jquery\LICENSE.txt" />
     <Content Include="wwwroot\lib\mediaelementjs\background.png" />
     <Content Include="wwwroot\lib\mediaelementjs\bigplay.fw.png" />
     <Content Include="wwwroot\lib\mediaelementjs\bigplay.png" />
