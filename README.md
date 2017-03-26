@@ -2,6 +2,7 @@
 #### SF的宗旨：学习并融入新技术新思想
 #### SF 官方 QQ 交流群：306818375
 #### 在线体验地址[SF官方演示地址](http://www.mayisite.pro:8080)
+#### 博客园地址 [http://www.cnblogs.com/CrazyAnts/p/6602001.html](http://www.cnblogs.com/CrazyAnts/p/6602001.html) 
 
 #### Prerequisite:
 - .NET Core SDK (https://www.microsoft.com/net/core)
@@ -54,4 +55,3 @@ SimpleFramework is licensed under the Apache 2.0 license.
 #### Linux后台主页
 ![Linux后台主页](http://git.oschina.net/sframework/SF-Boilerplate/raw/master/miscellaneous/sf_ubuntu.jpg)
 ![字典分类管理](https://git.oschina.net/sframework/SF-Boilerplate//raw/master/miscellaneous/SF_DataItem.png)
-
