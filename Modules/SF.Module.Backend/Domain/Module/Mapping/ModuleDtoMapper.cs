@@ -13,7 +13,7 @@ namespace SF.Module.Backend.Domain.Module.Mapping
     /// <summary>
     /// 区域映射
     /// </summary>
-    public class ModuleDtoMapper : BaseCrudDtoMapper<ModuleEntity, ModuleViewModel>
+    public class ModuleDtoMapper : BaseCrudDtoMapper<ModuleEntity, ModuleViewModel, long>
     {
 
     }

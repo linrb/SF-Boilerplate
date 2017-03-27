@@ -26,9 +26,9 @@ namespace SF.Module.Backend.Domain.Area.Mapping
         public void MapperConfigurationToExpression(IMapperConfigurationExpression cfg)
         {
             cfg.CreateMap<AreaViewModel, AreaEntity>()
-                .MapperExpressCreatedMeta()
-                .MapperExpressUpdatedMeta()
-                .MapperExpressDeleteMeta()
+                .MapperExpressCreatedMeta<AreaViewModel, AreaEntity, long>()
+                .MapperExpressUpdatedMeta<AreaViewModel, AreaEntity, long>()
+                .MapperExpressDeleteMeta<AreaViewModel, AreaEntity, long>()
                 .ReverseMap();
 
            

@@ -26,9 +26,9 @@ namespace SF.Module.Backend.Domain.DataItem.Mapping
         public void MapperConfigurationToExpression(IMapperConfigurationExpression cfg)
         {
             cfg.CreateMap<DataItemViewModel, DataItemEntity>()
-                .MapperExpressCreatedMeta()
-                .MapperExpressUpdatedMeta()
-                .MapperExpressDeleteMeta()
+                .MapperExpressCreatedMeta<DataItemViewModel, DataItemEntity, long>()
+                .MapperExpressUpdatedMeta<DataItemViewModel, DataItemEntity, long>()
+                .MapperExpressDeleteMeta<DataItemViewModel, DataItemEntity, long>()
                 .ReverseMap();
 
            

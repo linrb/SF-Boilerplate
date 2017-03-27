@@ -19,17 +19,15 @@ namespace SF.Web.Security.Converters
     /// </summary>
     public static class ApplicationUserConverter
     {
-        public static ApplicationUserExtended ToCoreModel(this UserEntity applicationUser, UserEntity dbEntity)
+        public static ApplicationUserExtended ToCoreModel(this UserEntity dbEntity)
         {
             var retVal = new ApplicationUserExtended();
             retVal = new ApplicationUserExtended();
-            retVal = Mapper.Map<UserEntity, ApplicationUserExtended>(applicationUser);
             retVal = Mapper.Map<UserEntity, ApplicationUserExtended>(dbEntity);
-     
+
             retVal.UserState = EnumHelper.SafeParse<AccountState>(dbEntity.AccountState, AccountState.Approved);
 
-            retVal.Roles = dbEntity.Roles.Select(x => x.Role.ToCoreModel()).ToArray();
-            retVal.Permissions = retVal.Roles.SelectMany(x => x.Permissions).SelectMany(x => x.GetPermissionWithScopeCombinationNames()).Distinct().ToArray();
+          //  retVal.Roles = dbEntity.Roles.Select(x => x.Role.ToCoreModel()).ToArray();
            
             return retVal;
         }
@@ -60,10 +58,10 @@ namespace SF.Web.Security.Converters
             return retVal;
         }
 
-       
+
         public static void Patch(this ApplicationUserExtended user, UserEntity dbUser)
         {
- 
+
             dbUser = Mapper.Map<ApplicationUserExtended, UserEntity>(user);
             // Copy logins
             if (user.Logins != null)

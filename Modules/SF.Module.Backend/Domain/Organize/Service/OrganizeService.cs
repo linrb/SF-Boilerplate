@@ -16,10 +16,11 @@ using SF.Entitys.Abstraction.Pages;
 using Microsoft.EntityFrameworkCore;
 using SF.Module.Backend.Data.Entitys;
 using SF.Module.Backend.Data.Uow;
+using SF.Core.Abstraction.GenericServices;
 
 namespace SF.Module.Backend.Domain.Organize.Service
 {
-    public class OrganizeService : IOrganizeService
+    public class OrganizeService : ServiceBase, IOrganizeService
     {
         #region Fields
         private readonly ICacheManager<object> _cacheManager;

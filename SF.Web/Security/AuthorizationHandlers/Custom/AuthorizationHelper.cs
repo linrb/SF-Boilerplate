@@ -1,5 +1,7 @@
-﻿using SF.Core.Common;
+﻿using Microsoft.AspNetCore.Http;
+using SF.Core.Common;
 using SF.Entitys;
+using SF.Web.Security.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +13,13 @@ namespace SF.Web.Security.AuthorizationHandlers.Custom
     public class AuthorizationHelper : IAuthorizationHelper
     {
         private readonly ISiteContext _siteContext;
-        public AuthorizationHelper(SiteContext currentSite)
+        private readonly ISecurityService _securityService;
+        private readonly IHttpContextAccessor _contextAccessor;
+        public AuthorizationHelper(SiteContext currentSite, ISecurityService securityService, IHttpContextAccessor contextAccessor)
         {
             _siteContext = currentSite;
+            _contextAccessor = contextAccessor;
+            _securityService = securityService;
         }
         public async Task AuthorizeAsync(IEnumerable<ISFAuthorizeAttribute> authorizeAttributes)
         {
@@ -21,18 +27,12 @@ namespace SF.Web.Security.AuthorizationHandlers.Custom
             {
                 return;
             }
-
-            //if (!AbpSession.UserId.HasValue)
-            //{
-            //    throw new AbpAuthorizationException(
-            //        LocalizationManager.GetString(AbpConsts.LocalizationSourceName, "CurrentUserDidNotLoginToTheApplication")
-            //        );
-            //}
+            var user = await _securityService.GetCurrentUser(UserDetails.Full);
 
             foreach (var authorizeAttribute in authorizeAttributes)
             {
-                
-              //  await PermissionChecker.AuthorizeAsync(authorizeAttribute.RequireAllPermissions, authorizeAttribute.Permissions);
+
+                user.Authorize(authorizeAttribute.RequireAllPermissions, authorizeAttribute.Permissions);
             }
         }
 

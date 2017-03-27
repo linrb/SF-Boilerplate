@@ -19,6 +19,8 @@ PM> Add-Migration Modify_Multi -Context CoreDbContext
 //更新脚本
 PM> Update-Database -ConfigurationTypeName MigrationsConfiguration
 
+PM> Remove-Migration
+
 使用命令行工具
 在应用程序根目录按住shift键同时单击鼠标右键，选择“在此处打开命令窗口”，输入数据库迁移的命令
 dotnet ef migrations add Init

@@ -45,7 +45,7 @@ namespace SF.Module.Backend.Controllers
     /// </summary>
     [Authorize]
     [Route("Api/Authorize/")]
-    public class AuthorizeApiController : CrudControllerBase<OrganizeEntity, OrganizeViewModel>
+    public class AuthorizeApiController : CrudControllerBase<OrganizeEntity, OrganizeViewModel, long>
     {
         private readonly IMediator _mediator;
         private readonly IModuleService _moduleService;

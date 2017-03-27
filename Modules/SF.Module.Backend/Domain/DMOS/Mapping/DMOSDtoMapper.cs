@@ -13,7 +13,7 @@ namespace SF.Module.Backend.Domain.DMOS.Mapping
     /// <summary>
     /// 岗位职位工作组映射
     /// </summary>
-    public class DMOSDtoMapper : BaseCrudDtoMapper<DMOSEntity, DMOSViewModel>
+    public class DMOSDtoMapper : BaseCrudDtoMapper<DMOSEntity, DMOSViewModel, long>
     {
 
     }

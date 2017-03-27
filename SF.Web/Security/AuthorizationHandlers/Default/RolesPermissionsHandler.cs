@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using SF.Entitys;
 using SF.Web.Security.Converters;
+using SF.Web.Security.Extensions;
 
 namespace SF.Web.Security
 {
@@ -17,14 +18,15 @@ namespace SF.Web.Security
     {
         private readonly UserManager<UserEntity> _userManagerFactory;
         private readonly RoleManager<RoleEntity> _roleManager;
-   
+        private readonly ISecurityService _securityService;
 
         public RolesPermissionsHandler(UserManager<UserEntity> userManagerFactory,
-                RoleManager<RoleEntity> roleManager)
+                RoleManager<RoleEntity> roleManager,
+                ISecurityService securityService)
         {
             _userManagerFactory = userManagerFactory;
             _roleManager = roleManager;
-  
+            _securityService = securityService;
         }
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
@@ -34,71 +36,24 @@ namespace SF.Web.Security
                 // This handler is not revoking any pre-existing grants.
                 return;
             }
+            var user = await _securityService.GetCurrentUser(UserDetails.Full);
 
             // Determine which set of permissions would satisfy the access check
             var grantingNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
             PermissionNames(requirement.Permission, grantingNames);
 
-            // Determine what set of roles should be examined by the access check
-            var rolesToExamine = new List<string> { "Anonymous" };
+            user.Authorize(false, grantingNames.ToArray());
 
-            if (context.User.Identity.IsAuthenticated)
-            {
-                rolesToExamine.Add("Authenticated");
-                // Add roles from the user
-                foreach (var claim in context.User.Claims)
-                {
-                    if (claim.Type == ClaimTypes.Role)
-                    {
-                        rolesToExamine.Add(claim.Value);
-                    }
-                }
-            }
-
-            foreach (var roleName in rolesToExamine)
-            {
-                var role = await _roleManager.FindByNameAsync(roleName);
-
-                if (role != null)
-                {
-                    var permissions = role.RolePermissions.Select(rp => rp.ToCoreModel()).ToArray();
-                    // var permissions = role.RolePermissions.Where(x => x.ClaimType == Permission.ClaimType);
-
-                    foreach (var permission in permissions)
-                    {
-                        string permissionName = permission.Name;
-
-                        if (grantingNames.Contains(permissionName))
-                        {
-                            context.Succeed(requirement);
-                            return;
-                        }
-                    }
-                }
-            }
+            context.Succeed(requirement);
+            
+            
         }
 
         private static void PermissionNames(Permission permission, HashSet<string> stack)
         {
             // The given name is tested
             stack.Add(permission.Name);
-
-            //// Iterate implied permissions to grant, it present
-            //if (dbUser.Roles != null && dbUser.Roles.Any())
-            //{
-            //    foreach (var impliedBy in permission.ImpliedBy)
-            //    {
-            //        // Avoid potential recursion
-            //        if (stack.Contains(impliedBy.Name))
-            //        {
-            //            continue;
-            //        }
-
-            //        // Otherwise accumulate the implied permission names recursively
-            //        PermissionNames(impliedBy, stack);
-            //    }
-            //}
         }
     }
 }

@@ -24,20 +24,20 @@ using System.Threading.Tasks;
 
 namespace SF.WebHost
 {
-    public class CoreDbContextFactory : IDbContextFactory<CoreDbContext>
-    {
+    //public class CoreDbContextFactory : IDbContextFactory<CoreDbContext>
+    //{
 
-        public CoreDbContext Create(DbContextFactoryOptions options)
-        {
+    //    public CoreDbContext Create(DbContextFactoryOptions options)
+    //    {
 
-            var builder = new DbContextOptionsBuilder<CoreDbContext>();
-            builder.UseSqlServer("Server=.;Database=SF_Team_2017_Dev;uid=sa;pwd=123.com.cn;Trusted_Connection=True;MultipleActiveResultSets=true;Integrated Security=false;"
-                 , b => b.MigrationsAssembly("SF.WebHost"));
+    //        var builder = new DbContextOptionsBuilder<CoreDbContext>();
+    //        builder.UseSqlServer("Server=.;Database=SF_Team_2017_Dev;uid=sa;pwd=123.com.cn;Trusted_Connection=True;MultipleActiveResultSets=true;Integrated Security=false;"
+    //             , b => b.MigrationsAssembly("SF.WebHost"));
 
-            return new CoreDbContext(builder.Options);
-        }
+    //        return new CoreDbContext(builder.Options);
+    //    }
 
-    }
+    //}
 
     //public class MyDbContextFactory : IDbContextFactory<CoreDbContext>
     //{

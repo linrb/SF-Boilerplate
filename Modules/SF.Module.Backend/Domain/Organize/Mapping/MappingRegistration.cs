@@ -26,9 +26,9 @@ namespace SF.Module.Backend.Domain.Organize.Mapping
         public void MapperConfigurationToExpression(IMapperConfigurationExpression cfg)
         {
             cfg.CreateMap<OrganizeViewModel, OrganizeEntity>()
-                .MapperExpressCreatedMeta()
-                .MapperExpressUpdatedMeta()
-                .MapperExpressDeleteMeta()
+                .MapperExpressCreatedMeta<OrganizeViewModel, OrganizeEntity, long>()
+                .MapperExpressUpdatedMeta<OrganizeViewModel, OrganizeEntity, long>()
+                .MapperExpressDeleteMeta<OrganizeViewModel, OrganizeEntity, long>()
                 .ReverseMap();
 
            

@@ -13,7 +13,7 @@ namespace SF.Module.Backend.Domain.DataItem.Mapping
     /// <summary>
     /// 字典映射
     /// </summary>
-    public class DataItemDtoMapper : CrudDtoMapper<DataItemEntity, DataItemViewModel>
+    public class DataItemDtoMapper : CrudDtoMapper<DataItemEntity, DataItemViewModel,long>
     {
         /// <summary>
         /// DTO转换领域的实体映射

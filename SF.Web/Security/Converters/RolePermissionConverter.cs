@@ -29,12 +29,6 @@ namespace SF.Web.Security.Converters
             return result;
         }
 
-        public static void Patch(this RolePermissionEntity source, RolePermissionEntity target)
-        {
-            if (target == null)
-                throw new ArgumentNullException("target");
-
-         
-        }
+      
     }
 }

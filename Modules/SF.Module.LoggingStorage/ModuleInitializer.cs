@@ -14,6 +14,9 @@ using SF.Module.LoggingStorage.Models;
 using Microsoft.AspNetCore.Builder;
 using SF.Core;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Serilog;
+using SF.Web.Modules;
+using SF.Core.Infrastructure.Modules;
 
 namespace SF.Module.LoggingStorage
 {
@@ -48,6 +51,12 @@ namespace SF.Module.LoggingStorage
             serviceCollection.TryAddScoped<ILogRepository, LogRepository>();
             serviceCollection.TryAddScoped<LogManager>();
 
+            Log.Logger = new LoggerConfiguration()
+              .Enrich.FromLogContext()
+              .WriteTo.LiterateConsole()
+               .WriteTo.RollingFile("log-{Date}.txt",
+                    outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message}{NewLine}{Exception}")
+              .CreateLogger();
         }
 
         private void UserEFLogging(IApplicationBuilder applicationBuilder)
@@ -81,9 +90,12 @@ namespace SF.Module.LoggingStorage
             };
             //寻找更好的日志记录方案
             //   loggerFactory.AddDbLogger(applicationBuilder.ApplicationServices, logFilter, logRepo);
-
-
-
+            //Serilog
+            ILoggerFactory loggerfactory = applicationBuilder.ApplicationServices.GetService<ILoggerFactory>();
+            IApplicationLifetime appLifetime = applicationBuilder.ApplicationServices.GetService<IApplicationLifetime>();
+            loggerfactory.AddSerilog();
+            // Ensure any buffered events are sent at shutdown
+            appLifetime.ApplicationStopped.Register(Log.CloseAndFlush);
         }
     }
 }

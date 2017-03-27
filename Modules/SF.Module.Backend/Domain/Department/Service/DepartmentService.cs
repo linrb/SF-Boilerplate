@@ -16,10 +16,11 @@ using SF.Entitys.Abstraction.Pages;
 using Microsoft.EntityFrameworkCore;
 using SF.Module.Backend.Data.Entitys;
 using SF.Module.Backend.Data.Uow;
+using SF.Core.Abstraction.GenericServices;
 
 namespace SF.Module.Backend.Domain.Department.Service
 {
-    public class DepartmentService : IDepartmentService
+    public class DepartmentService : ServiceBase, IDepartmentService
     {
         #region Fields
         private readonly ICacheManager<object> _cacheManager;

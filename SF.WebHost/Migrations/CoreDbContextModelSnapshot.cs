@@ -116,6 +116,46 @@ namespace SF.WebHost.Migrations
                     b.ToTable("Core_AutoHistory");
                 });
 
+            modelBuilder.Entity("SF.Core.Infrastructure.Modules.InstalledModule", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Active");
+
+                    b.Property<string>("CreatedBy");
+
+                    b.Property<DateTimeOffset>("CreatedOn");
+
+                    b.Property<DateTime>("DateActivated");
+
+                    b.Property<DateTime>("DateDeactivated");
+
+                    b.Property<DateTime>("DateInstalled");
+
+                    b.Property<string>("DeletedBy");
+
+                    b.Property<DateTimeOffset?>("DeletedOn");
+
+                    b.Property<bool>("Installed");
+
+                    b.Property<string>("ModuleAssemblyName");
+
+                    b.Property<string>("ModuleName");
+
+                    b.Property<string>("ModuleVersion");
+
+                    b.Property<int>("SortIndex");
+
+                    b.Property<string>("UpdatedBy");
+
+                    b.Property<DateTimeOffset>("UpdatedOn");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Core_InstalledModule");
+                });
+
             modelBuilder.Entity("SF.Core.Infrastructure.Plugins.Models.InstalledPlugin", b =>
                 {
                     b.Property<long>("Id")

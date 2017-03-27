@@ -14,10 +14,11 @@ using SF.Module.Backend.Data.Entitys;
 using SF.Module.Backend.Data.Uow;
 using SF.Core.Abstraction.UoW.Helper;
 using Z.EntityFramework.Plus;
+using SF.Core.Abstraction.GenericServices;
 
 namespace SF.Module.Backend.Domain.Module.Service
 {
-    public class ModuleService : IModuleService
+    public class ModuleService : ServiceBase, IModuleService
     {
         #region Fields
         private readonly ICacheManager<object> _cacheManager;

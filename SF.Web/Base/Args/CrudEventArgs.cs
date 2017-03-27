@@ -25,11 +25,11 @@ namespace SF.Web.Base.Args
     /// </summary>
     /// <typeparam name="TCodeTabelEntity"></typeparam>
     /// <typeparam name="TCodeTabelModel"></typeparam>
-    public class CrudEventArgs<TCodeTabelEntity, TCodeTabelModel>
-        where TCodeTabelEntity : BaseEntity
-        where TCodeTabelModel : EntityModelBase
+    public class CrudEventArgs<TCodeTabelEntity, TCodeTabelModel, Tkey>
+        where TCodeTabelEntity : BaseEntity<Tkey>
+        where TCodeTabelModel : EntityModelBase<Tkey>
     {
-        public CrudEventArgs( TCodeTabelModel model, TCodeTabelEntity entity=null, long id = 0)
+        public CrudEventArgs(Tkey id, TCodeTabelModel model, TCodeTabelEntity entity = null)
         {
             this.Id = Id;
             this.Entity = entity;
@@ -39,7 +39,7 @@ namespace SF.Web.Base.Args
         /// <summary>
         /// 主键ID
         /// </summary>
-        public long Id { get; set; }
+        public Tkey Id { get; set; }
         /// <summary>
         /// 实体数据
         /// </summary>

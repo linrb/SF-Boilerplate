@@ -8,19 +8,22 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Logging;
 using System.Linq;
+using SF.Core.Infrastructure.Modules;
+using SF.Core.Infrastructure.Modules.Builder;
 
 namespace SF.Core.Common
 {
     public class AssemblyProvider : IAssemblyProvider
     {
-        protected ILogger<AssemblyProvider> logger;
-
+        protected ILogger<AssemblyProvider> _logger;
+        public IServiceProvider _serviceProvider;
         public Func<Assembly, bool> IsCandidateAssembly { get; set; }
         public Func<Library, bool> IsCandidateCompilationLibrary { get; set; }
 
         public AssemblyProvider(IServiceProvider serviceProvider)
         {
-            this.logger = serviceProvider.GetService<ILoggerFactory>().CreateLogger<AssemblyProvider>();
+            this._serviceProvider = serviceProvider;
+            this._logger = serviceProvider.GetService<ILoggerFactory>().CreateLogger<AssemblyProvider>();
             this.IsCandidateAssembly = assembly =>
              /* !assembly.FullName.StartsWith("Microsoft.") && !assembly.FullName.Contains("SF.WebHost") &&*/ assembly.FullName.StartsWith("SF.");
             this.IsCandidateCompilationLibrary = library =>
@@ -38,14 +41,15 @@ namespace SF.Core.Common
 
         public IEnumerable<ModuleInfo> GetModules(string path)
         {
+
             IList<ModuleInfo> modules = new List<ModuleInfo>();
 
             if (!string.IsNullOrEmpty(path) && Directory.Exists(path))
             {
-                this.logger.LogInformation("Discovering and loading assemblies from path '{0}'", path);
+                this._logger.LogInformation("Discovering and loading assemblies from path '{0}'", path);
                 var moduleRootFolder = new DirectoryInfo(path);
                 var moduleFolders = moduleRootFolder.GetDirectories();
-
+                var builder = new JsonModuleBuilder(_serviceProvider);
                 foreach (var moduleFolder in moduleFolders)
                 {
                     var binFolder = new DirectoryInfo(Path.Combine(moduleFolder.FullName, "bin"));
@@ -75,16 +79,21 @@ namespace SF.Core.Common
                         //过滤非主模块库，如SF.Module.Backend.Data
                         if (assembly.FullName.Split(',')[0].Equals(moduleFolder.Name))
                         {
-                            modules.Add(new ModuleInfo
+                            var moduleInfo = new ModuleInfo
                             {
                                 Name = moduleFolder.Name,
                                 Assembly = assembly,
-                                Path = moduleFolder.FullName
-                            });
+                                Path = moduleFolder.FullName,
+
+                            };
+                            moduleInfo.Config = builder.BuildConfig(moduleFolder.FullName).Result ?? new ModuleConfig();
+
+                            modules.Add(moduleInfo);
                         }
                     }
                 }
             }
+
 
             return modules;
 
@@ -96,10 +105,10 @@ namespace SF.Core.Common
             var binFolder = new DirectoryInfo(path);
             if (!binFolder.Exists)
             {
-                this.logger.LogWarning("Discovering and loading assemblies from path '{0}' skipped: path not found", binFolder);
+                this._logger.LogWarning("Discovering and loading assemblies from path '{0}' skipped: path not found", binFolder);
                 return assemblies;
             }
-            this.logger.LogInformation("Discovering and loading assemblies from path '{0}'", binFolder);
+            this._logger.LogInformation("Discovering and loading assemblies from path '{0}'", binFolder);
             foreach (var file in binFolder.GetFileSystemInfos("*.dll", SearchOption.AllDirectories))
             {
                 Assembly assembly;
@@ -120,7 +129,7 @@ namespace SF.Core.Common
                 if (this.IsCandidateAssembly(assembly) && !assemblies.Contains(assembly))
                 {
                     assemblies.Add(assembly);
-                    this.logger.LogInformation("Assembly '{0}' is discovered and loaded", assembly.FullName);
+                    this._logger.LogInformation("Assembly '{0}' is discovered and loaded", assembly.FullName);
                 }
 
             }
@@ -133,7 +142,7 @@ namespace SF.Core.Common
         {
             List<Assembly> assemblies = new List<Assembly>();
 
-            this.logger.LogInformation("Discovering and loading assemblies from DependencyContext");
+            this._logger.LogInformation("Discovering and loading assemblies from DependencyContext");
 
             foreach (CompilationLibrary compilationLibrary in DependencyContext.Default.CompileLibraries)
             {
@@ -145,13 +154,13 @@ namespace SF.Core.Common
                     {
                         assembly = Assembly.Load(new AssemblyName(compilationLibrary.Name));
                         assemblies.Add(assembly);
-                        this.logger.LogInformation("Assembly '{0}' is discovered and loaded", assembly.FullName);
+                        this._logger.LogInformation("Assembly '{0}' is discovered and loaded", assembly.FullName);
                     }
 
                     catch (Exception e)
                     {
-                        this.logger.LogWarning("Error loading assembly '{0}'", compilationLibrary.Name);
-                        this.logger.LogInformation(e.ToString());
+                        this._logger.LogWarning("Error loading assembly '{0}'", compilationLibrary.Name);
+                        this._logger.LogInformation(e.ToString());
                     }
                 }
             }

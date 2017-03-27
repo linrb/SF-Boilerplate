@@ -11,23 +11,43 @@ namespace SF.Data
     /// <summary>
     /// 基础仓储接口
     /// </summary>
-    /// <typeparam name="Entity"></typeparam>
-    public interface IBaseRepository<Entity> : IEFCoreQueryableRepository<Entity, long> where Entity : BaseEntity
+    /// <typeparam name="TEntity"></typeparam>
+    public interface IBaseRepository<TEntity> : IEFCoreQueryableRepository<TEntity, long> where TEntity : BaseEntity
     {
     }
     /// <summary>
-    /// 基础仓库类
+    /// 基础仓储类
     /// </summary>
-    /// <typeparam name="Entity"></typeparam>
-    public class BaseRepository<Entity> : EFCoreQueryableRepository<Entity, long>, IBaseRepository<Entity> where Entity : BaseEntity
+    /// <typeparam name="TEntity"></typeparam>
+    public class BaseRepository<TEntity> : EFCoreQueryableRepository<TEntity, long>, IBaseRepository<TEntity> where TEntity : BaseEntity
     {
         public BaseRepository(DbContext context) : base(context)
         {
         }
-        public override IQueryable<Entity> QueryById(long id)
+        public override IQueryable<TEntity> QueryById(long id)
         {
             return Query().Where(e => e.Id == id);
         }
     }
-
+    /// <summary>
+    /// 基础仓储接口
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    public interface IBaseRepository<TEntity, Tkey> : IEFCoreQueryableRepository<TEntity, Tkey> where TEntity : BaseEntity<Tkey>
+    {
+    }
+    /// <summary>
+    /// 基础仓储类
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
+    public class BaseRepository<TEntity, Tkey> : EFCoreQueryableRepository<TEntity, Tkey>, IBaseRepository<TEntity, Tkey> where TEntity : BaseEntity<Tkey>
+    {
+        public BaseRepository(DbContext context) : base(context)
+        {
+        }
+        public override IQueryable<TEntity> QueryById(Tkey id)
+        {
+            return Query().Where(e => e.Id.Equals(id));
+        }
+    }
 }

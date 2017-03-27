@@ -71,6 +71,7 @@ namespace SaasKit.Multitenancy
                     {
                         cache.Set(identifier, tenantContext, cacheEntryOptions);
                     }
+                    cache.Set(cacheKey, tenantContext, cacheEntryOptions);
                 }
             }
             else

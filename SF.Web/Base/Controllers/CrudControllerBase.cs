@@ -29,15 +29,15 @@ namespace SF.Web.Base.Controllers
     /// </summary>
     /// <typeparam name="TCodeTabelEntity"></typeparam>
     /// <typeparam name="TCodeTabelModel"></typeparam>
-    public abstract class CrudControllerBase<TCodeTabelEntity, TCodeTabelModel> : ControllerBase
-        where TCodeTabelEntity : BaseEntity, new()
-        where TCodeTabelModel : EntityModelBase, new()
+    public abstract class CrudControllerBase<TCodeTabelEntity, TCodeTabelModel, Tkey> : ControllerBase
+        where TCodeTabelEntity : BaseEntity<Tkey>, new()
+        where TCodeTabelModel : EntityModelBase<Tkey>, new()
     {
         #region Fields
         protected readonly FluentValidation.IValidator<TCodeTabelModel> _validator;
-        protected readonly IGenericReaderService<TCodeTabelEntity, long> _readerService;
-        protected readonly IGenericWriterService<TCodeTabelEntity, long> _writerService;
-        protected readonly IEFCoreQueryableRepository<TCodeTabelEntity, long> _repository;
+        protected readonly IGenericReaderService<TCodeTabelEntity, Tkey> _readerService;
+        protected readonly IGenericWriterService<TCodeTabelEntity, Tkey> _writerService;
+        protected readonly IEFCoreQueryableRepository<TCodeTabelEntity, Tkey> _repository;
 
         #endregion
 
@@ -46,7 +46,7 @@ namespace SF.Web.Base.Controllers
         /// 数据转换器
         /// </summary>
         /// <returns></returns>
-        protected ICrudDtoMapper<TCodeTabelEntity, TCodeTabelModel> CrudDtoMapper { get; set; }
+        protected ICrudDtoMapper<TCodeTabelEntity, TCodeTabelModel, Tkey> CrudDtoMapper { get; set; }
         /// <summary>
         /// 初始化构造
         /// 使用注入的同一个上下文
@@ -55,13 +55,13 @@ namespace SF.Web.Base.Controllers
         /// <param name="logger">日志</param>
         protected CrudControllerBase(IServiceCollection service, ILogger<Controller> logger) : base(service, logger)
         {
-            
-            _validator =service.BuildServiceProvider().GetService<FluentValidation.IValidator<TCodeTabelModel>>();
-            _readerService =service.BuildServiceProvider().GetService<IGenericReaderService<TCodeTabelEntity, long>>();
-            _writerService =service.BuildServiceProvider().GetService<IGenericWriterService<TCodeTabelEntity, long>>();
-            _repository =service.BuildServiceProvider().GetService<IEFCoreQueryableRepository<TCodeTabelEntity, long>>();
-            CrudDtoMapper =service.BuildServiceProvider().GetService<ICrudDtoMapper<TCodeTabelEntity, TCodeTabelModel>>();
-     
+
+            _validator = service.BuildServiceProvider().GetService<FluentValidation.IValidator<TCodeTabelModel>>();
+            _readerService = service.BuildServiceProvider().GetService<IGenericReaderService<TCodeTabelEntity, Tkey>>();
+            _writerService = service.BuildServiceProvider().GetService<IGenericWriterService<TCodeTabelEntity, Tkey>>();
+            _repository = service.BuildServiceProvider().GetService<IEFCoreQueryableRepository<TCodeTabelEntity, Tkey>>();
+            CrudDtoMapper = service.BuildServiceProvider().GetService<ICrudDtoMapper<TCodeTabelEntity, TCodeTabelModel, Tkey>>();
+
         }
         /// <summary>
         /// 初始化构造
@@ -72,13 +72,13 @@ namespace SF.Web.Base.Controllers
         /// <param name="logger">日志</param>
         protected CrudControllerBase(IEFCoreUnitOfWork unitOfWork, IServiceCollection service, ILogger<Controller> logger) : base(service, logger)
         {
- 
+
             _validator = service.BuildServiceProvider().GetService<FluentValidation.IValidator<TCodeTabelModel>>();
-            _repository = new EFCoreBaseRepository<TCodeTabelEntity>(unitOfWork.Context);
-            _readerService = new GenericReaderService<TCodeTabelEntity, long>(logger, _repository);
-            _writerService = new GenericWriterService<TCodeTabelEntity, long>(logger, _repository, unitOfWork);
-            CrudDtoMapper = service.BuildServiceProvider().GetService<ICrudDtoMapper<TCodeTabelEntity, TCodeTabelModel>>();
-           
+            _repository = new EFCoreBaseRepository<TCodeTabelEntity, Tkey>(unitOfWork.Context);
+            _readerService = new GenericReaderService<TCodeTabelEntity, Tkey>(logger, _repository);
+            _writerService = new GenericWriterService<TCodeTabelEntity, Tkey>(logger, _repository, unitOfWork);
+            CrudDtoMapper = service.BuildServiceProvider().GetService<ICrudDtoMapper<TCodeTabelEntity, TCodeTabelModel, Tkey>>();
+
         }
         #endregion
 
@@ -86,11 +86,11 @@ namespace SF.Web.Base.Controllers
         /// <summary>
         /// 查询带返回结果的外部委托方法
         /// </summary>
-        protected Func<IGenericReaderService<TCodeTabelEntity, long>, Task<TCodeTabelModel>> GetAsyncFun;
+        protected Func<IGenericReaderService<TCodeTabelEntity, Tkey>, Task<TCodeTabelModel>> GetAsyncFun;
         /// <summary>
         /// 查询所有带返回结果的外部委托方法
         /// </summary>
-        protected Func<IGenericReaderService<TCodeTabelEntity, long>, Task<IEnumerable<TCodeTabelModel>>> GetAllAsyncFun;
+        protected Func<IGenericReaderService<TCodeTabelEntity, Tkey>, Task<IEnumerable<TCodeTabelModel>>> GetAllAsyncFun;
         /// <summary>
         /// 获取一条记录后
         /// </summary>
@@ -104,7 +104,7 @@ namespace SF.Web.Base.Controllers
         /// </summary>
         /// <param name="arg"></param>
         /// <returns></returns>
-        protected virtual AjaxResult OnBeforAdd(CrudEventArgs<TCodeTabelEntity, TCodeTabelModel> arg)
+        protected virtual AjaxResult OnBeforAdd(CrudEventArgs<TCodeTabelEntity, TCodeTabelModel, Tkey> arg)
         {
             return new AjaxResult
             {
@@ -115,7 +115,7 @@ namespace SF.Web.Base.Controllers
         /// 新增后
         /// </summary>
         /// <param name="arg"></param>
-        protected virtual void OnAfterAdd(CrudEventArgs<TCodeTabelEntity, TCodeTabelModel> arg)
+        protected virtual void OnAfterAdd(CrudEventArgs<TCodeTabelEntity, TCodeTabelModel, Tkey> arg)
         {
 
         }
@@ -124,7 +124,7 @@ namespace SF.Web.Base.Controllers
         /// </summary>
         /// <param name="arg"></param>
         /// <returns></returns>
-        protected virtual AjaxResult OnBeforEdit(CrudEventArgs<TCodeTabelEntity, TCodeTabelModel> arg)
+        protected virtual AjaxResult OnBeforEdit(CrudEventArgs<TCodeTabelEntity, TCodeTabelModel, Tkey> arg)
         {
             return new AjaxResult
             {
@@ -135,7 +135,7 @@ namespace SF.Web.Base.Controllers
         /// 编辑后
         /// </summary>
         /// <param name="arg"></param>
-        protected virtual void OnAfterEdit(CrudEventArgs<TCodeTabelEntity, TCodeTabelModel> arg)
+        protected virtual void OnAfterEdit(CrudEventArgs<TCodeTabelEntity, TCodeTabelModel, Tkey> arg)
         {
 
         }
@@ -144,7 +144,7 @@ namespace SF.Web.Base.Controllers
         /// </summary>
         /// <param name="arg"></param>
         /// <returns></returns>
-        protected virtual AjaxResult OnBeforDelete(CrudEventArgs<TCodeTabelEntity, TCodeTabelModel> arg)
+        protected virtual AjaxResult OnBeforDelete(CrudEventArgs<TCodeTabelEntity, TCodeTabelModel, Tkey> arg)
         {
             return new AjaxResult
             {
@@ -155,7 +155,7 @@ namespace SF.Web.Base.Controllers
         /// 删除后
         /// </summary>
         /// <param name="arg"></param>
-        protected virtual void OnAfterDeletet(CrudEventArgs<TCodeTabelEntity, TCodeTabelModel> arg)
+        protected virtual void OnAfterDeletet(CrudEventArgs<TCodeTabelEntity, TCodeTabelModel, Tkey> arg)
         {
 
         }
@@ -169,7 +169,7 @@ namespace SF.Web.Base.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetAsync(int id)
+        public async Task<IActionResult> GetAsync(Tkey id)
         {
             Guard.CheckArgumentNull(CrudDtoMapper, "数据转换器不能为空");
             try
@@ -245,7 +245,7 @@ namespace SF.Web.Base.Controllers
             try
             {
                 #region 新增处理Befor
-                var addArgs = new CrudEventArgs<TCodeTabelEntity, TCodeTabelModel>(model);
+                var addArgs = new CrudEventArgs<TCodeTabelEntity, TCodeTabelModel, Tkey>(model.Id, model);
                 var rtnBefore = this.OnBeforAdd(addArgs);
                 if (!rtnBefore.state.ToString().IsCaseSensitiveEqual(ResultType.success.ToString())) return Error(rtnBefore.message);
                 #endregion
@@ -277,7 +277,7 @@ namespace SF.Web.Base.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateAsync(int id, TCodeTabelModel model)
+        public async Task<IActionResult> UpdateAsync(Tkey id, TCodeTabelModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequestResult(ModelState);
@@ -289,14 +289,14 @@ namespace SF.Web.Base.Controllers
             {
 
                 #region 编辑处理Befor
-                var addArgs = new CrudEventArgs<TCodeTabelEntity, TCodeTabelModel>(model);
+                var addArgs = new CrudEventArgs<TCodeTabelEntity, TCodeTabelModel, Tkey>(id, model);
                 var rtnBefore = this.OnBeforEdit(addArgs);
                 if (!rtnBefore.state.ToString().IsCaseSensitiveEqual(ResultType.success.ToString())) return Error(rtnBefore.message);
                 #endregion
                 #region 编辑处理
 
                 if (model == null) throw new ValidationException("model not provided");
-                if (id != model.Id) throw new ValidationException("id does not match model id");
+                if (!id.Equals(model.Id)) throw new ValidationException("id does not match model id");
                 var codetableEntity = await _readerService.GetAsync(id);
                 if (codetableEntity == null)
                     return NotFoundResult($"Code with id {id} not found in {nameof(TCodeTabelModel)}.");
@@ -329,14 +329,14 @@ namespace SF.Web.Base.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id:int}")]
-        public async Task<IActionResult> DeleteAsync(int id)
+        public async Task<IActionResult> DeleteAsync(Tkey id)
         {
             Guard.CheckArgumentNull(CrudDtoMapper, "数据转换器不能为空");
 
             try
             {
                 #region 删除处理Befor
-                var addArgs = new CrudEventArgs<TCodeTabelEntity, TCodeTabelModel>(null, null, id);
+                var addArgs = new CrudEventArgs<TCodeTabelEntity, TCodeTabelModel, Tkey>(id, null, null);
                 var rtnBefore = this.OnBeforDelete(addArgs);
                 if (!rtnBefore.state.ToString().IsCaseSensitiveEqual(ResultType.success.ToString())) return Error(rtnBefore.message);
                 #endregion

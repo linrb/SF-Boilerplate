@@ -17,7 +17,7 @@ namespace SF.Web.Components
 {
     public class CachingSiteResolver : MemoryCacheTenantResolverBase<SiteContext>
     {
-        
+
         public CachingSiteResolver(
             IMemoryCache cache,
             ILoggerFactory loggerFactory,
@@ -43,7 +43,7 @@ namespace SF.Web.Components
         {
             var listCacheKey = "folderList";
             var result = cache.Get(listCacheKey) as List<string>;
-            if(result != null)
+            if (result != null)
             {
                 log.LogDebug("Folder List retrieved from cache with key \"{cacheKey}\".", listCacheKey);
                 return result;
@@ -63,7 +63,7 @@ namespace SF.Web.Components
         protected override MemoryCacheEntryOptions CreateCacheEntryOptions()
         {
             return new MemoryCacheEntryOptions()
-                .SetAbsoluteExpiration(cachingOptions.SiteCacheDuration); 
+                .SetAbsoluteExpiration(cachingOptions.SiteCacheDuration);
         }
 
         // Determines what information in the current request should be used to do a cache lookup e.g.the hostname.
@@ -121,7 +121,7 @@ namespace SF.Web.Components
                 return ResolveByFolderAsync(context);
             }
 
-            return ResolveByHostAsync(context);           
+            return ResolveByHostAsync(context);
         }
 
         private async Task<TenantContext<SiteContext>> ResolveByFolderAsync(HttpContext context)

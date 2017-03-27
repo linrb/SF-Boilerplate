@@ -30,7 +30,7 @@ namespace SF.Data.Identity
           
         }
 
-        internal HttpContext Context
+        internal new HttpContext Context
         {
             get
             {

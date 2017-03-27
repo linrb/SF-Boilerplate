@@ -12,16 +12,15 @@ using System.Threading.Tasks;
 using System.Threading;
 using SF.Core.Extensions;
 using SF.Core;
+using SF.Core.Common;
+using SF.Data.Extensions;
 
 namespace SF.Data
 {
-    public class CoreDbContext : IdentityDbContext<UserEntity, RoleEntity, long, IdentityUserClaim<long>, UserRoleEntity, IdentityUserLogin<long>, IdentityRoleClaim<long>, IdentityUserToken<long>>
+    public class CoreDbContext : IdentityDbContext<UserEntity, RoleEntity, long, IdentityUserClaim<long>, UserRoleEntity, IdentityUserLogin<long>, IdentityRoleClaim<long>, IdentityUserToken<long>>, IStorageContext
     {
-        // private readonly IEFCacheServiceProvider _cacheServiceProvider;
         public CoreDbContext(DbContextOptions<CoreDbContext> options) : base(options)
         {
-            //  Database.EnsureCreated();
-            //  _cacheServiceProvider = cacheServiceProvider;
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,14 +30,16 @@ namespace SF.Data
             {
                 //获取所有继承BaseEntity的实体
                 var entityClassTypes = assemblie.ExportedTypes.Where(x =>
-                //( x.GetTypeInfo().IsSubclassOf(typeof(BaseEntity)) && !x.GetTypeInfo().IsAbstract)||
-                typeof(IEntityWithTypedId<long>).IsAssignableFrom(x) && !x.GetTypeInfo().IsAbstract &&
-               !x.GetTypeInfo().IsDefined(typeof(MapIgnoreAttribute), false)
+                typeof(IEntityWithTypedId<long>).IsAssignableFrom(x) && !x.GetTypeInfo().IsAbstract
+                && !x.GetTypeInfo().IsDefined(typeof(MapIgnoreAttribute), false)
+                && x.EnsureDbContextAndEntitiesIncludeDbContextAttrCache<CoreDbContext>(true)
                 );
                 typeToRegisterEntitys.AddRange(entityClassTypes);
 
                 //获取所有继承ICustomModelBuilder的实体映射
-                var customModelBuilderClassTypes = assemblie.ExportedTypes.Where(x => typeof(ICustomModelBuilder).IsAssignableFrom(x) && x.GetTypeInfo().IsClass);
+                var customModelBuilderClassTypes = assemblie.ExportedTypes.Where(x => typeof(ICustomModelBuilder).IsAssignableFrom(x) 
+                && x.GetTypeInfo().IsClass
+                && x.EnsureDbContextAndEntitiesIncludeDbContextAttrCache<CoreDbContext>(true));
                 typeToRegisterCustomModelBuilders.AddRange(customModelBuilderClassTypes);
             }
 
@@ -58,6 +59,45 @@ namespace SF.Data
             //optionsBuilder.UseSqlServer("Server=192.168.1.101;Database=SF_Team_2017;uid=sa;pwd=123.com.cn;Pooling=True;Min Pool Size=1;Max Pool Size=100;Trusted_Connection=True;MultipleActiveResultSets=true;Integrated Security=false;",
             //   b => b.MigrationsAssembly("SF.WebHost"));
             base.OnConfiguring(optionsBuilder);
+        }
+
+
+        public override int SaveChanges()
+        {
+            // ensure auto history
+            this.EnsureAutoHistory();
+            //var changedEntityNames = this.GetChangedEntityNames();
+
+            var result = base.SaveChanges();
+            //  _cacheServiceProvider.InvalidateCacheDependencies(changedEntityNames);
+
+            return result;
+        }
+
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+
+            var result = base.SaveChanges(acceptAllChangesOnSuccess);
+            return result;
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // ensure auto history
+            this.EnsureAutoHistory();
+            //  var changedEntityNames = this.GetChangedEntityNames();
+
+            var result = base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+            //  _cacheServiceProvider.InvalidateCacheDependencies(changedEntityNames);
+            return result;
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+
+            var result = base.SaveChangesAsync(cancellationToken);
+            return result;
+
         }
 
         private static void RegiserConvention(ModelBuilder modelBuilder)
@@ -98,42 +138,27 @@ namespace SF.Data
             }
         }
 
-        public override int SaveChanges()
-        {
-            // ensure auto history
-            this.EnsureAutoHistory();
-            //var changedEntityNames = this.GetChangedEntityNames();
+        //private static bool? EnsureDbContextAndEntitiesIncludeDbContextAttrCache(Type type)
+        //{
+        //    var dbContextAttributes = type.GetAttributesOfDeclaringType()
+        //      .OfType<DbContextAttribute>().ToArray();
 
-            var result = base.SaveChanges();
-            //  _cacheServiceProvider.InvalidateCacheDependencies(changedEntityNames);
+        //    var includeAttr = type.GetTypeInfo().GetCustomAttribute(typeof(DbContextAttribute));
+        //    if (!dbContextAttributes.Any())
+        //    {
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        foreach (var dbContextAttribute in dbContextAttributes)
+        //        {
 
-            return result;
-        }
+        //            if (dbContextAttribute.DbContext is CoreDbContext)
+        //                return true;
+        //        }
+        //    }
+        //    return false;
 
-        public override int SaveChanges(bool acceptAllChangesOnSuccess)
-        {
-
-            var result = base.SaveChanges(acceptAllChangesOnSuccess);
-            return result;
-        }
-
-        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // ensure auto history
-            this.EnsureAutoHistory();
-            //  var changedEntityNames = this.GetChangedEntityNames();
-
-            var result = base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-            //  _cacheServiceProvider.InvalidateCacheDependencies(changedEntityNames);
-            return result;
-        }
-
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-
-            var result = base.SaveChangesAsync(cancellationToken);
-            return result;
-
-        }
+        //}
     }
 }

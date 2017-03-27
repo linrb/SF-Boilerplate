@@ -13,7 +13,7 @@ namespace SF.Module.Backend.Domain.Department.Mapping
     /// <summary>
     /// 区域映射
     /// </summary>
-    public class DepartmentDtoMapper : BaseCrudDtoMapper<DepartmentEntity, DepartmentViewModel>
+    public class DepartmentDtoMapper : BaseCrudDtoMapper<DepartmentEntity, DepartmentViewModel, long>
     {
 
     }

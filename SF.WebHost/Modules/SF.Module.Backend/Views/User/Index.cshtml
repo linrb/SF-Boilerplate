@@ -187,10 +187,20 @@
                 $("#" + this.id).setSelection(selectedRowIndex, false);
             }
         });
+        //查询条件
+        $("#queryCondition .dropdown-menu li").click(function () {
+            var text = $(this).find('a').html();
+            var value = $(this).find('a').attr('data-value');
+            $("#queryCondition .dropdown-text").html(text).attr('data-value', value)
+        });
         //查询事件
         $("#btn_Search").click(function () {
             $gridTable.jqGrid('setGridParam', {
-
+                url: "/Api/User/GetPageListJson",
+                postData: {
+                    condition: $("#queryCondition").find('.dropdown-text').attr('data-value'),
+                    keyword: $("#txt_Keyword").val()
+                },
             }).trigger('reloadGrid');
         });
 

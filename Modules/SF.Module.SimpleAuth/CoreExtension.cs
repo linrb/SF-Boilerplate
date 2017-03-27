@@ -10,6 +10,8 @@ using SF.Module.SimpleAuth.Tenants;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using SF.Web.Modules;
+using SF.Core.Infrastructure.Modules;
 
 namespace SF.Module.SimpleAuth
 {

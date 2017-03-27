@@ -16,8 +16,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using SF.Core.Common;
+using SF.Core.Errors.Exceptions;
+using SF.Core.Extensions;
+using SF.Web.Extensions;
 using SF.Web.Models;
 using System;
+using System.Net;
 
 namespace SF.Web.Attributes
 {
@@ -30,12 +34,12 @@ namespace SF.Web.Attributes
         }
         public override void OnException(ExceptionContext context)
         {
+           
             var msg = "";
             if (context.Exception is UnauthorizedAccessException)
             {
                 msg = "Unauthorized Access";
-                context.HttpContext.Response.StatusCode = 401;
-
+                
                 // handle logging here
                 _Logger.LogWarning("Unauthorized Access in Controller Filter.");
             }
@@ -49,16 +53,18 @@ namespace SF.Web.Attributes
                 msg = context.Exception.GetBaseException().Message;
                 string stack = context.Exception.StackTrace;
 #endif
-                context.HttpContext.Response.StatusCode = 500;
-
+               
                 // handle logging here
                 _Logger.LogWarning($"Application thrown error: { msg}", context.Exception);
             }
+            context.HttpContext.Response.StatusCode = context.Exception.GetStatusCode(context.HttpContext);
             _Logger.LogError(new EventId(0), context.Exception, msg);
-            // always return a JSON result
-            context.Result = new ContentResult() { Content = (new AjaxResult { state = ResultType.error.ToString(), message = context.Exception.Message }).ToJson() };
+            if (context.HttpContext.Request.IsAjaxRequest())
+                context.Result = new ContentResult() { Content = (new AjaxResult { state = ResultType.error.ToString(), message = msg }).ToJson() };
 
             base.OnException(context);
         }
+
+      
     }
 }

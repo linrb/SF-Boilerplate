@@ -26,9 +26,9 @@ namespace SF.Module.Backend.Domain.DMOS.Mapping
         public void MapperConfigurationToExpression(IMapperConfigurationExpression cfg)
         {
             cfg.CreateMap<DMOSViewModel, DMOSEntity>()
-                .MapperExpressCreatedMeta()
-                .MapperExpressUpdatedMeta()
-                .MapperExpressDeleteMeta()
+                .MapperExpressCreatedMeta<DMOSViewModel, DMOSEntity, long>()
+                .MapperExpressUpdatedMeta<DMOSViewModel, DMOSEntity, long>()
+                .MapperExpressDeleteMeta<DMOSViewModel, DMOSEntity, long>()
                 .ReverseMap();
 
            

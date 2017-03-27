@@ -55,14 +55,14 @@ namespace SF.Module.Backend.Controllers
         private readonly IRoleRules _roleRules;
         private readonly IRoleService _roleService;
 
-        private ICrudDtoMapper<RoleEntity, RoleViewModel> _crudDtoMapper;
+        private ICrudDtoMapper<RoleEntity, RoleViewModel, long> _crudDtoMapper;
         public RoleApiController(IServiceCollection collection, ILogger<RoleApiController> logger,
              IRoleService roleService,
              IMediator mediator,
              RoleManager<RoleEntity> roleManager,
              IRoleRules roleRules,
              IServiceCollection service,
-             ICrudDtoMapper<RoleEntity, RoleViewModel> crudDtoMapper)
+             ICrudDtoMapper<RoleEntity, RoleViewModel, long> crudDtoMapper)
             : base(service, logger)
         {
             this._roleService = roleService;

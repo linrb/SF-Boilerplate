@@ -6,6 +6,11 @@ namespace SF.Web.Security
 {
     public class ApplicationUserExtended
     {
+        public ApplicationUserExtended()
+        {
+             
+        }
+
         public long Id { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
@@ -37,7 +42,10 @@ namespace SF.Web.Security
         /// Assigned roles.
         /// </summary>
         public Role[] Roles { get; set; }
-
+        /// <summary>
+        /// All permissions from assigned roles.
+        /// </summary>
+        public string[] Modules { get; set; }
         /// <summary>
         /// All permissions from assigned roles.
         /// </summary>

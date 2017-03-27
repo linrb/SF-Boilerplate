@@ -8,9 +8,9 @@ namespace SF.Web.Base.DataContractMapper
     /// <summary>
     /// 从模型构建表单的构建器的接口
     /// </summary>
-    public interface ICrudDtoMapper<TEntity, TDto>
-        where TEntity : IEntityWithTypedId<long>
-        where TDto : EntityModelBase
+    public interface ICrudDtoMapper<TEntity, TDto, Tkey>
+        where TEntity : IEntityWithTypedId<Tkey>
+        where TDto : EntityModelBase<Tkey>
     {
 
         /// <summary>

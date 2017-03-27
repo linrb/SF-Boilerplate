@@ -3,10 +3,11 @@ using SF.Core.Abstraction.Data;
 using SF.Entitys;
 using SF.Data;
 using SF.Core.Abstraction.UoW.Helper;
+using SF.Core.Abstraction.GenericServices;
 
 namespace SF.Module.Backend.Services.Implementation
 {
-    public class UrlSlugService : IUrlSlugService
+    public class UrlSlugService : ServiceBase, IUrlSlugService
     {
         private readonly IBaseUnitOfWork _baseUnitOfWork;
 

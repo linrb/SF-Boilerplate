@@ -1,10 +1,10 @@
 ﻿using System.IO;
 using SF.Entitys;
-using SF.Core.Abstraction.Service;
+using SF.Core.Abstraction.GenericServices;
 
 namespace SF.Module.Backend.Services
 {
-    public interface IMediaService : IBaseService
+    public interface IMediaService : IServiceBase
     {
         string GetMediaUrl(MediaEntity media);
 

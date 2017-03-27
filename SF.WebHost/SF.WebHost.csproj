@@ -29,6 +29,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Shared\Components\BackendMenu\Default.cshtml" />
+    <Content Remove="Views\Shared\Components\BackendScripts\Default.cshtml" />
+    <Content Remove="Views\Shared\Components\BackendStyleSheets\Default.cshtml" />
+    <Content Remove="Views\Shared\_BackendMenu.cshtml" />
+    <Content Remove="Views\Shared\_BackendMenuGroup.cshtml" />
+    <Content Remove="Views\Shared\_BackendMenuItem.cshtml" />
+    <Content Remove="Views\Shared\_BackendScript.cshtml" />
+    <Content Remove="Views\Shared\_BackendScripts.cshtml" />
+    <Content Remove="Views\Shared\_BackendStyleSheet.cshtml" />
+    <Content Remove="Views\Shared\_BackendStyleSheets.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="node_modules\ansi-regex\package.json" />
     <Content Include="node_modules\ansi-styles\package.json" />
     <Content Include="node_modules\archy\package.json" />
@@ -350,6 +363,7 @@
     <Content Include="node_modules\wrappy\package.json" />
     <Content Include="node_modules\xtend\package.json" />
     <Content Include="wwwroot\css\account.css" />
+    <Content Include="wwwroot\css\ace.less" />
     <Content Include="wwwroot\css\bootstrap-modal\bootstrap-modal-bs3patch.css" />
     <Content Include="wwwroot\css\bootstrap-modal\bootstrap-modal.css" />
     <Content Include="wwwroot\css\bootstrap-sortable.css" />
@@ -1564,6 +1578,213 @@
     <Content Include="wwwroot\lib\ZeroClipboard\ZeroClipboard.min.js" />
     <Content Include="wwwroot\lib\ZeroClipboard\ZeroClipboard.min.map" />
     <Content Include="wwwroot\lib\ZeroClipboard\ZeroClipboard.swf" />
+    <Content Include="wwwroot\Theme\bootstrap.css" />
+    <Content Include="wwwroot\Theme\bootstrap.less" />
+    <Content Include="wwwroot\Theme\css\.csscomb.json" />
+    <Content Include="wwwroot\Theme\css\bootstrap-colorpicker\colorpicker.less" />
+    <Content Include="wwwroot\Theme\css\bootstrap-modal\bootstrap-modal-bs3patch.css" />
+    <Content Include="wwwroot\Theme\css\bootstrap-modal\bootstrap-modal.css" />
+    <Content Include="wwwroot\Theme\css\bootstrap-sortable.css" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\.csscomb.json" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\.csslintrc" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\alerts.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\badges.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\bootstrap.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\breadcrumbs.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\button-groups.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\buttons.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\carousel.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\close.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\code.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\component-animations.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\dropdowns.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\forms.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\glyphicons.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\grid.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\input-groups.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\jumbotron.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\labels.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\list-group.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\media.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\alerts.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\background-variant.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\border-radius.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\buttons.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\center-block.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\clearfix.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\forms.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\gradients.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\grid-framework.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\grid.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\hide-text.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\image.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\labels.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\list-group.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\nav-divider.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\nav-vertical-align.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\opacity.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\pagination.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\panels.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\progress-bar.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\reset-filter.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\reset-text.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\resize.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\responsive-visibility.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\size.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\tab-focus.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\table-row.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\text-emphasis.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\text-overflow.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\mixins\vendor-prefixes.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\modals.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\navbar.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\navs.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\normalize.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\pager.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\pagination.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\panels.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\popovers.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\print.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\progress-bars.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\responsive-embed.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\responsive-utilities.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\scaffolding.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\tables.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\theme.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\thumbnails.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\tooltip.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\type.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\utilities.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\variables.less" />
+    <Content Include="wwwroot\Theme\css\Bootstrap\wells.less" />
+    <Content Include="wwwroot\Theme\css\developer.css" />
+    <Content Include="wwwroot\Theme\css\fluidbox.css" />
+    <Content Include="wwwroot\Theme\css\FontAwesome\animated.less" />
+    <Content Include="wwwroot\Theme\css\FontAwesome\bordered-pulled.less" />
+    <Content Include="wwwroot\Theme\css\FontAwesome\core.less" />
+    <Content Include="wwwroot\Theme\css\FontAwesome\fixed-width.less" />
+    <Content Include="wwwroot\Theme\css\FontAwesome\font-awesome.less" />
+    <Content Include="wwwroot\Theme\css\FontAwesome\icons.less" />
+    <Content Include="wwwroot\Theme\css\FontAwesome\larger.less" />
+    <Content Include="wwwroot\Theme\css\FontAwesome\list.less" />
+    <Content Include="wwwroot\Theme\css\FontAwesome\mixins.less" />
+    <Content Include="wwwroot\Theme\css\FontAwesome\path.less" />
+    <Content Include="wwwroot\Theme\css\FontAwesome\rotated-flipped.less" />
+    <Content Include="wwwroot\Theme\css\FontAwesome\screen-reader.less" />
+    <Content Include="wwwroot\Theme\css\FontAwesome\stacked.less" />
+    <Content Include="wwwroot\Theme\css\FontAwesome\variables.less" />
+    <Content Include="wwwroot\Theme\css\Fonts\FontAwesome\fontawesome-webfont.eot" />
+    <Content Include="wwwroot\Theme\css\Fonts\FontAwesome\fontawesome-webfont.svg" />
+    <Content Include="wwwroot\Theme\css\Fonts\FontAwesome\fontawesome-webfont.ttf" />
+    <Content Include="wwwroot\Theme\css\Fonts\FontAwesome\fontawesome-webfont.woff" />
+    <Content Include="wwwroot\Theme\css\Fonts\FontAwesome\fontawesome-webfont.woff2" />
+    <Content Include="wwwroot\Theme\css\Fonts\FontAwesome\FontAwesome.otf" />
+    <Content Include="wwwroot\Theme\css\Fonts\OpenSans\OpenSans-Bold-webfont.eot" />
+    <Content Include="wwwroot\Theme\css\Fonts\OpenSans\OpenSans-Bold-webfont.svg" />
+    <Content Include="wwwroot\Theme\css\Fonts\OpenSans\OpenSans-Bold-webfont.ttf" />
+    <Content Include="wwwroot\Theme\css\Fonts\OpenSans\OpenSans-Bold-webfont.woff" />
+    <Content Include="wwwroot\Theme\css\Fonts\OpenSans\OpenSans-Italic-webfont.eot" />
+    <Content Include="wwwroot\Theme\css\Fonts\OpenSans\OpenSans-Italic-webfont.svg" />
+    <Content Include="wwwroot\Theme\css\Fonts\OpenSans\OpenSans-Italic-webfont.ttf" />
+    <Content Include="wwwroot\Theme\css\Fonts\OpenSans\OpenSans-Italic-webfont.woff" />
+    <Content Include="wwwroot\Theme\css\Fonts\OpenSans\OpenSans-Light-webfont.eot" />
+    <Content Include="wwwroot\Theme\css\Fonts\OpenSans\OpenSans-Light-webfont.svg" />
+    <Content Include="wwwroot\Theme\css\Fonts\OpenSans\OpenSans-Light-webfont.ttf" />
+    <Content Include="wwwroot\Theme\css\Fonts\OpenSans\OpenSans-Light-webfont.woff" />
+    <Content Include="wwwroot\Theme\css\Fonts\OpenSans\OpenSans-Regular-webfont.eot" />
+    <Content Include="wwwroot\Theme\css\Fonts\OpenSans\OpenSans-Regular-webfont.svg" />
+    <Content Include="wwwroot\Theme\css\Fonts\OpenSans\OpenSans-Regular-webfont.ttf" />
+    <Content Include="wwwroot\Theme\css\Fonts\OpenSans\OpenSans-Regular-webfont.woff" />
+    <Content Include="wwwroot\Theme\css\Fonts\OpenSans\OpenSans-Semibold-webfont.eot" />
+    <Content Include="wwwroot\Theme\css\Fonts\OpenSans\OpenSans-Semibold-webfont.svg" />
+    <Content Include="wwwroot\Theme\css\Fonts\OpenSans\OpenSans-Semibold-webfont.ttf" />
+    <Content Include="wwwroot\Theme\css\Fonts\OpenSans\OpenSans-Semibold-webfont.woff" />
+    <Content Include="wwwroot\Theme\css\JCrop\jcrop.css" />
+    <Content Include="wwwroot\Theme\css\JCrop\jcrop.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\active-users.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\checkbox.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\code-editor.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\context-setter.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\custom-buttons.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\fieldset-actions.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\follow.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\group-list.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\html-editor.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\image-cropper.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\key-value.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\labels.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\list-extensions.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\number-increment.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\pagelist.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\paging-navigation.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\paneled-list.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\person-directory.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\person-list.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\photo-frame.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\photo-round.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\picker-date.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\picker-time.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\pickers.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\pill-help.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\range-editors.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\rollover.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\security-controls.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\sf-list.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\sliding-date-range.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\smart-search.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\tags.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\tree.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\typeahead-support.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\update-panel-status.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\upload-controls.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\well-message.less" />
+    <Content Include="wwwroot\Theme\css\sf-components\wizard.less" />
+    <Content Include="wwwroot\Theme\css\summernote\font\summernote.eot" />
+    <Content Include="wwwroot\Theme\css\summernote\font\summernote.ttf" />
+    <Content Include="wwwroot\Theme\css\summernote\font\summernote.woff" />
+    <Content Include="wwwroot\Theme\css\summernote\summernote.css" />
+    <Content Include="wwwroot\Theme\css\_blocks-checkinadmin.less" />
+    <Content Include="wwwroot\Theme\css\_blocks-cms.less" />
+    <Content Include="wwwroot\Theme\css\_blocks-communication.less" />
+    <Content Include="wwwroot\Theme\css\_blocks-core.less" />
+    <Content Include="wwwroot\Theme\css\_blocks-crm.less" />
+    <Content Include="wwwroot\Theme\css\_blocks-events.less" />
+    <Content Include="wwwroot\Theme\css\_blocks-finance.less" />
+    <Content Include="wwwroot\Theme\css\_blocks-groups.less" />
+    <Content Include="wwwroot\Theme\css\_blocks-prayer.less" />
+    <Content Include="wwwroot\Theme\css\_blocks-reporting.less" />
+    <Content Include="wwwroot\Theme\css\_blocks-security.less" />
+    <Content Include="wwwroot\Theme\css\_blocks-workflow.less" />
+    <Content Include="wwwroot\Theme\css\_checkin-core.less" />
+    <Content Include="wwwroot\Theme\css\_components.less" />
+    <Content Include="wwwroot\Theme\css\_dashboard.less" />
+    <Content Include="wwwroot\Theme\css\_forms.less" />
+    <Content Include="wwwroot\Theme\css\_global-variables.less" />
+    <Content Include="wwwroot\Theme\css\_grid.less" />
+    <Content Include="wwwroot\Theme\css\_helpers.less" />
+    <Content Include="wwwroot\Theme\css\_kiosk-core.less" />
+    <Content Include="wwwroot\Theme\css\_modal.less" />
+    <Content Include="wwwroot\Theme\css\_page-admin.less" />
+    <Content Include="wwwroot\Theme\css\_page-specific.less" />
+    <Content Include="wwwroot\Theme\css\_scroll.less" />
+    <Content Include="wwwroot\Theme\css\_sf-core.less" />
+    <Content Include="wwwroot\Theme\css\_sf-variables.less" />
+    <Content Include="wwwroot\Theme\css\_store.less" />
+    <Content Include="wwwroot\Theme\theme.css" />
+    <Content Include="wwwroot\Theme\theme.less" />
+    <Content Include="wwwroot\Theme\Themes\bootstrap.css" />
+    <Content Include="wwwroot\Theme\Themes\bootstrap.less" />
+    <Content Include="wwwroot\Theme\Themes\theme.css" />
+    <Content Include="wwwroot\Theme\Themes\theme.less" />
+    <Content Include="wwwroot\Theme\Themes\_css-overrides.less" />
+    <Content Include="wwwroot\Theme\Themes\_print.less" />
+    <Content Include="wwwroot\Theme\Themes\_variable-overrides.less" />
+    <Content Include="wwwroot\Theme\Themes\_variables.less" />
+    <Content Include="wwwroot\Theme\_css-overrides.less" />
+    <Content Include="wwwroot\Theme\_print.less" />
+    <Content Include="wwwroot\Theme\_variable-overrides.less" />
+    <Content Include="wwwroot\Theme\_variables.less" />
     <Content Include="wwwroot\upload\20170117\32f84307-9dda-44ae-8a6b-f980fe2100da.jpg" />
     <Content Include="wwwroot\upload\image\20161209\6361688150497418245660056.jpg" />
     <Content Include="wwwroot\upload\image\20161209\6361688170466412306255315.jpg" />
@@ -1587,6 +1808,7 @@
     <PackageReference Include="Audit.NET.SqlServer" Version="6.2.0" />
     <PackageReference Include="Audit.Mvc" Version="6.2.0" />
     <PackageReference Include="Hangfire" Version="1.6.5" />
+    <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.0.0-alpha24" />
     <PackageReference Include="SaasKit.Multitenancy" Version="1.1.4" />
     <PackageReference Include="System.Interactive.Async" Version="3.0.0" />
     <PackageReference Include="AutoMapper" Version="5.2.0" />
@@ -1598,9 +1820,24 @@
     <PackageReference Include="CacheManager.Serialization.Json" Version="0.9.3-*" />
     <PackageReference Include="CacheManager.StackExchange.Redis" Version="0.9.3-*" />
     <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="1.4.29" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="1.4.0" />
+    <PackageReference Include="Serilog.Sinks.Literate" Version="2.1.0" />
+    <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Views\Shared\Components\BackendMenu\Default.cshtml" />
+    <None Include="Views\Shared\Components\BackendScripts\Default.cshtml" />
+    <None Include="Views\Shared\Components\BackendStyleSheets\Default.cshtml" />
+    <None Include="Views\Shared\_BackendMenu.cshtml" />
+    <None Include="Views\Shared\_BackendMenuGroup.cshtml" />
+    <None Include="Views\Shared\_BackendMenuItem.cshtml" />
+    <None Include="Views\Shared\_BackendScript.cshtml" />
+    <None Include="Views\Shared\_BackendScripts.cshtml" />
+    <None Include="Views\Shared\_BackendStyleSheet.cshtml" />
+    <None Include="Views\Shared\_BackendStyleSheets.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="node_modules\.bin\dateformat" />
@@ -2914,6 +3151,13 @@
     <None Update="Config\sql\area.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Config\sql\base.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Modules\" />
   </ItemGroup>
 
 </Project>

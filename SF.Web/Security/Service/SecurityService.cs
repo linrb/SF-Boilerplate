@@ -9,29 +9,45 @@ using SF.Core.Extensions;
 using Microsoft.AspNetCore.Identity;
 using SF.Core.Abstraction.Data;
 using SF.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace SF.Web.Security
 {
     public class SecurityService : ISecurityService
     {
         private readonly IBaseUnitOfWork _baseUnitOfWork;
-        private readonly UserManager<UserEntity> _userManagerFactory;
+        private readonly UserManager<UserEntity> _userManager;
+        private readonly RoleManager<RoleEntity> _roleManager;
         private readonly ICacheManager<object> _cacheManager;
         private readonly IEnumerable<IPermissionProvider> _permissionProviders;
-
+        private readonly IHttpContextAccessor _contextAccessor;
         public SecurityService(IBaseUnitOfWork baseUnitOfWork,
-                               UserManager<UserEntity> userManagerFactory,
+                               UserManager<UserEntity> userManager,
+                               RoleManager<RoleEntity> roleManage,
                                ICacheManager<object> cacheManager,
-                               IEnumerable<IPermissionProvider> permissionProviders)
+                               IEnumerable<IPermissionProvider> permissionProviders,
+                                IHttpContextAccessor contextAccessor)
         {
             _baseUnitOfWork = baseUnitOfWork;
-            _userManagerFactory = userManagerFactory;
+            _userManager = userManager;
+            _roleManager = roleManage;
             _cacheManager = cacheManager;
             _permissionProviders = permissionProviders;
-
+            _contextAccessor = contextAccessor;
         }
 
         #region ISecurityService Members
+        public async Task<ApplicationUserExtended> GetCurrentUser(UserDetails detailsLevel)
+        {
+            var context = _contextAccessor.HttpContext;
+            if (context.User.Identity.IsAuthenticated)
+            {
+                var user = await GetApplicationUserByNameAsync(context.User.GetUserName());
+                return GetUserExtended(user, detailsLevel);
+            }
+            return new ApplicationUserExtended();
+        }
         public async Task<ApplicationUserExtended> FindByNameAsync(string userName, UserDetails detailsLevel)
         {
             var user = await GetApplicationUserByNameAsync(userName);
@@ -46,7 +62,7 @@ namespace SF.Web.Security
 
         public async Task<ApplicationUserExtended> FindByEmailAsync(string email, UserDetails detailsLevel)
         {
-            using (var userManager = _userManagerFactory)
+            using (var userManager = _userManager)
             {
                 var user = await userManager.FindByEmailAsync(email);
                 return GetUserExtended(user, detailsLevel);
@@ -55,7 +71,7 @@ namespace SF.Web.Security
 
         public async Task<ApplicationUserExtended> FindByLoginAsync(string loginProvider, string providerKey, UserDetails detailsLevel)
         {
-            using (var userManager = _userManagerFactory)
+            using (var userManager = _userManager)
             {
                 var user = await userManager.FindByLoginAsync(loginProvider, providerKey);
                 return GetUserExtended(user, detailsLevel);
@@ -74,7 +90,7 @@ namespace SF.Web.Security
             NormalizeUser(user);
 
             //Update ASP.NET indentity user
-            using (var userManager = _userManagerFactory)
+            using (var userManager = _userManager)
             {
                 var dbUser = user.ToIdentityModel();
                 user.Id = dbUser.Id;
@@ -121,7 +137,7 @@ namespace SF.Web.Security
             NormalizeUser(user);
 
             //Update ASP.NET indentity user
-            using (var userManager = _userManagerFactory)
+            using (var userManager = _userManager)
             {
                 var dbUser = await userManager.FindByIdAsync(user.Id.ToString());
                 result = ValidateUser(dbUser);
@@ -170,7 +186,7 @@ namespace SF.Web.Security
 
         public async Task DeleteAsync(string[] names)
         {
-            using (var userManager = _userManagerFactory)
+            using (var userManager = _userManager)
             {
                 foreach (var name in names)
                 {
@@ -200,7 +216,7 @@ namespace SF.Web.Security
 
         public async Task<SecurityResult> ChangePasswordAsync(string name, string oldPassword, string newPassword)
         {
-            using (var userManager = _userManagerFactory)
+            using (var userManager = _userManager)
             {
                 var dbUser = await GetApplicationUserByNameAsync(name);
                 var result = ValidateUser(dbUser);
@@ -217,7 +233,7 @@ namespace SF.Web.Security
 
         public async Task<SecurityResult> ResetPasswordAsync(string name, string newPassword)
         {
-            using (var userManager = _userManagerFactory)
+            using (var userManager = _userManager)
             {
                 var dbUser = await GetApplicationUserByNameAsync(name);
                 var result = ValidateUser(dbUser);
@@ -235,7 +251,7 @@ namespace SF.Web.Security
 
         public async Task<SecurityResult> ResetPasswordAsync(string userId, string token, string newPassword)
         {
-            using (var userManager = _userManagerFactory)
+            using (var userManager = _userManager)
             {
                 var dbUser = await GetApplicationUserByIdAsync(userId);
                 var result = ValidateUser(dbUser);
@@ -271,7 +287,7 @@ namespace SF.Web.Security
 
             if (request.AccountTypes != null && request.AccountTypes.Any())
             {
-              //  query = query.Where(x => request.AccountTypes.Contains(x.UserType));
+                //  query = query.Where(x => request.AccountTypes.Contains(x.UserType));
             }
             result.TotalCount = query.Count();
 
@@ -300,7 +316,7 @@ namespace SF.Web.Security
         public async Task<string> GeneratePasswordResetTokenAsync(string userId)
         {
 
-            using (var userManager = _userManagerFactory)
+            using (var userManager = _userManager)
             {
                 var dbUser = await GetApplicationUserByIdAsync(userId);
                 var result = ValidateUser(dbUser);
@@ -366,31 +382,6 @@ namespace SF.Web.Security
             return GetUserExtended(user, detailsLevel);
         }
 
-        //private Permission[] LoadAllPermissions()
-        //{
-        //    var manifestPermissions = new List<Permission>();
-
-        //    foreach (var module in _moduleCatalog.Modules.OfType<ManifestModuleInfo>())
-        //    {
-        //        foreach (var group in module.Permissions)
-        //        {
-        //            if (group.Permissions != null)
-        //            {
-        //                foreach (var modulePermission in group.Permissions)
-        //                {
-        //                    var permission = modulePermission.ToCoreModel(module.Id, group.Name);
-        //                    permission.AvailableScopes = _permissionScopeService.GetAvailablePermissionScopes(permission.Id).ToList();
-        //                    manifestPermissions.Add(permission);
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    var allPermissions = PredefinedPermissions.Permissions.Union(manifestPermissions).ToArray();
-        //    return allPermissions;
-        //}
-
-
         private SecurityResult ValidateUser(UserEntity dbUser)
         {
             var result = new SecurityResult { Succeeded = true };
@@ -409,7 +400,7 @@ namespace SF.Web.Security
 
             var result = await _cacheManager.GetAsync(cacheRegion, cacheRegion, async () =>
             {
-                using (var userManager = _userManagerFactory)
+                using (var userManager = _userManager)
                 {
                     return await userManager.FindByIdAsync(userId);
                 }
@@ -424,7 +415,7 @@ namespace SF.Web.Security
 
             var result = _cacheManager.Get(cacheRegion, cacheRegion, () =>
             {
-                using (var userManager = _userManagerFactory)
+                using (var userManager = _userManager)
                 {
                     return Task.Run(async () => await userManager.FindByNameAsync(userName)).Result;
                 }
@@ -439,7 +430,7 @@ namespace SF.Web.Security
 
             var result = await _cacheManager.GetAsync(cacheRegion, cacheRegion, async () =>
             {
-                using (var userManager = _userManagerFactory)
+                using (var userManager = _userManager)
                 {
                     return await userManager.FindByNameAsync(userName);
                 }
@@ -464,9 +455,19 @@ namespace SF.Web.Security
                 {
                     ApplicationUserExtended retVal;
 
-                    var user = _baseUnitOfWork.BaseWorkArea.User.Query().First(x => x.UserName == applicationUser.UserName);
-                    retVal = applicationUser.ToCoreModel(user);
+                    var user = _baseUnitOfWork.BaseWorkArea.User.Query().Include(x => x.Roles).First(x => x.UserName == applicationUser.UserName);
+                    var roleIds = user.Roles.Select(x => x.RoleId);
+                    //角色
+                    var roles = _roleManager.Roles.Where(x => roleIds.Contains(x.Id)).Select(x => x.ToCoreModel()).ToArray();
+                    //模块权限
+                    var modules = _baseUnitOfWork.BaseWorkArea.RoleModule.QueryFilter(x => roleIds.Contains(x.RoleId)).Select(x => x.Module).Distinct();
+                    //操作权限
+                    var permissions = _baseUnitOfWork.BaseWorkArea.RolePermission.QueryFilter(x => roleIds.Contains(x.RoleId)).Select(x => x.Permission).Distinct();
 
+                    retVal = user.ToCoreModel();
+                    retVal.Roles = roles;
+                    retVal.Permissions = permissions.Select(rp => rp.Name).Distinct().ToArray();
+                    retVal.Modules = modules.Select(x => x.EnCode).Distinct().ToArray();
                     if (detailsLevel != UserDetails.Export)
                     {
                         retVal.PasswordHash = null;

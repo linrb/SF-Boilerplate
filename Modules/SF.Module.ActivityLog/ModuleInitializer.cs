@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using SF.Core;
 using SF.Module.ActivityLog.Data;
+using SF.Web.Modules;
+using SF.Core.Infrastructure.Modules;
 
 namespace SF.Module.ActivityLog
 {

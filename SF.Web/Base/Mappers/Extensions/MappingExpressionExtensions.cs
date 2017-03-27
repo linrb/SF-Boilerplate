@@ -20,25 +20,25 @@ namespace SF.Web.Base.Mappers.Extensions
 {
     public static class MappingExpressionExtensions
     {
-        public static IMappingExpression<TModel, TEntity> MapperExpressCreatedMeta<TModel, TEntity>(this IMappingExpression<TModel, TEntity> cfg)
-            where TEntity : BaseEntity
-            where TModel : EntityModelBase
+        public static IMappingExpression<TModel, TEntity> MapperExpressCreatedMeta<TModel, TEntity, TKey>(this IMappingExpression<TModel, TEntity> cfg)
+            where TEntity : BaseEntity<TKey>
+            where TModel : EntityModelBase<TKey>
         {
             return cfg.ForMember(src => src.CreatedBy, opt => opt.Ignore())
                .ForMember(src => src.CreatedOn, opt => opt.Ignore());
         }
 
-        public static IMappingExpression<TModel, TEntity> MapperExpressUpdatedMeta<TModel, TEntity>(this IMappingExpression<TModel, TEntity> cfg)
-           where TEntity : BaseEntity
-           where TModel : EntityModelBase
+        public static IMappingExpression<TModel, TEntity> MapperExpressUpdatedMeta<TModel, TEntity, TKey>(this IMappingExpression<TModel, TEntity> cfg)
+           where TEntity : BaseEntity<TKey>
+           where TModel : EntityModelBase<TKey>
         {
             return cfg.ForMember(src => src.UpdatedBy, opt => opt.Ignore())
              .ForMember(src => src.UpdatedOn, opt => opt.Ignore());
         }
 
-        public static IMappingExpression<TModel, TEntity> MapperExpressDeleteMeta<TModel, TEntity>(this IMappingExpression<TModel, TEntity> cfg)
-       where TEntity : BaseEntity
-       where TModel : EntityModelBase
+        public static IMappingExpression<TModel, TEntity> MapperExpressDeleteMeta<TModel, TEntity, TKey>(this IMappingExpression<TModel, TEntity> cfg)
+       where TEntity : BaseEntity<TKey>
+       where TModel : EntityModelBase<TKey>
         {
             return cfg.ForMember(src => src.DeletedBy, opt => opt.Ignore())
              .ForMember(src => src.DeletedOn, opt => opt.Ignore());

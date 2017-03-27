@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using SF.Core;
+using SF.Web.Modules;
+using SF.Core.Infrastructure.Modules;
 
 namespace SF.Web.Control.Editor
 {

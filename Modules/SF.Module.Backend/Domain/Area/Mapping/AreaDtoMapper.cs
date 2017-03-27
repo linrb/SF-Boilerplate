@@ -13,7 +13,7 @@ namespace SF.Module.Backend.Domain.Area.Mapping
     /// <summary>
     /// 区域映射
     /// </summary>
-    public class AreaDtoMapper : BaseCrudDtoMapper<AreaEntity, AreaViewModel>
+    public class AreaDtoMapper : BaseCrudDtoMapper<AreaEntity, AreaViewModel, long>
     {
 
     }

@@ -26,9 +26,9 @@ namespace SF.Module.Backend.Domain.Department.Mapping
         public void MapperConfigurationToExpression(IMapperConfigurationExpression cfg)
         {
             cfg.CreateMap<DepartmentViewModel, DepartmentEntity>()
-                .MapperExpressCreatedMeta()
-                .MapperExpressUpdatedMeta()
-                .MapperExpressDeleteMeta()
+                .MapperExpressCreatedMeta<DepartmentViewModel, DepartmentEntity, long>()
+                .MapperExpressUpdatedMeta<DepartmentViewModel, DepartmentEntity, long>()
+                .MapperExpressDeleteMeta<DepartmentViewModel, DepartmentEntity, long>()
                 .ReverseMap();
 
            

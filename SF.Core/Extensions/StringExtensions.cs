@@ -566,6 +566,64 @@ namespace SF.Core.Extensions
             return false;
         }
 
+        /// <summary>
+        /// Removes first occurrence of the given postfixes from end of the given string.
+        /// </summary>
+        /// <param name="str">The string.</param>
+        /// <param name="postFixes">one or more postfix.</param>
+        /// <returns>Modified string or the same string if it has not any of given postfixes</returns>
+        public static string RemovePostFix(this string str, params string[] postFixes)
+        {
+            if (str.IsEmpty())
+            {
+                return null;
+            }
+
+            if (postFixes.IsNullOrEmpty())
+            {
+                return str;
+            }
+
+            foreach (var postFix in postFixes)
+            {
+                if (str.EndsWith(postFix))
+                {
+                    return str.Left(str.Length - postFix.Length);
+                }
+            }
+
+            return str;
+        }
+
+        /// <summary>
+        /// Removes first occurrence of the given prefixes from beginning of the given string.
+        /// </summary>
+        /// <param name="str">The string.</param>
+        /// <param name="preFixes">one or more prefix.</param>
+        /// <returns>Modified string or the same string if it has not any of given prefixes</returns>
+        public static string RemovePreFix(this string str, params string[] preFixes)
+        {
+            if (str.IsEmpty())
+            {
+                return null;
+            }
+
+            if (preFixes.IsNullOrEmpty())
+            {
+                return str;
+            }
+
+            foreach (var preFix in preFixes)
+            {
+                if (str.StartsWith(preFix))
+                {
+                    return str.Right(str.Length - preFix.Length);
+                }
+            }
+
+            return str;
+        }
+
         public static bool All(this string subject, params char[] chars)
         {
             if (string.IsNullOrEmpty(subject))
@@ -817,7 +875,25 @@ namespace SF.Core.Extensions
                 return str.Substring(0, length);
             }
         }
+        /// <summary>
+        /// Gets a substring of a string from end of the string.
+        /// </summary>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="str"/> is null</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="len"/> is bigger that string's length</exception>
+        public static string Right(this string str, int len)
+        {
+            if (str == null)
+            {
+                throw new ArgumentNullException("str");
+            }
 
+            if (str.Length < len)
+            {
+                throw new ArgumentException("len argument can not be bigger than given string's length!");
+            }
+
+            return str.Substring(str.Length - len, len);
+        }
         /// <summary>
         /// Truncates a string after a max length and adds ellipsis.  Truncation will occur at first space prior to maxLength.
         /// </summary>

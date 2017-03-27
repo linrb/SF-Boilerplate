@@ -22,7 +22,12 @@ namespace SF.Core.Extensions
 {
     public static class ClaimsPrincipalExtensions
     {
-
+        /// <summary>
+        /// 获取用户所有权限
+        /// </summary>
+        /// <param name="principal"></param>
+        /// <param name="allowedRolesCsv"></param>
+        /// <returns></returns>
         public static bool IsInRoles(this ClaimsPrincipal principal, string allowedRolesCsv)
         {
             if (string.IsNullOrWhiteSpace(allowedRolesCsv)) { return true; } // empty indicates no role filtering
@@ -54,7 +59,11 @@ namespace SF.Core.Extensions
             return false;
 
         }
-
+        /// <summary>
+        /// 获取用户显示名称
+        /// </summary>
+        /// <param name="principal"></param>
+        /// <returns></returns>
         public static string GetDisplayName(this ClaimsPrincipal principal)
         {
             if (principal == null)
@@ -64,7 +73,11 @@ namespace SF.Core.Extensions
             var claim = principal.FindFirst("DisplayName");
             return claim != null ? claim.Value : null;
         }
-
+        /// <summary>
+        /// 获取用户邮箱
+        /// </summary>
+        /// <param name="principal"></param>
+        /// <returns></returns>
         public static string GetEmail(this ClaimsPrincipal principal)
         {
             if (principal == null)
@@ -74,7 +87,11 @@ namespace SF.Core.Extensions
             var claim = principal.FindFirst(ClaimTypes.Email);
             return claim != null ? claim.Value : null;
         }
-
+        /// <summary>
+        /// 获取用户ID
+        /// </summary>
+        /// <param name="principal"></param>
+        /// <returns></returns>
         public static string GetUserId(this ClaimsPrincipal principal)
         {
             if (principal == null)
@@ -82,6 +99,20 @@ namespace SF.Core.Extensions
                 throw new ArgumentNullException(nameof(principal));
             }
             var claim = principal.FindFirst(ClaimTypes.NameIdentifier);
+            return claim != null ? claim.Value : null;
+        }
+        /// <summary>
+        /// 获取用户Name
+        /// </summary>
+        /// <param name="principal"></param>
+        /// <returns></returns>
+        public static string GetUserName(this ClaimsPrincipal principal)
+        {
+            if (principal == null)
+            {
+                throw new ArgumentNullException(nameof(principal));
+            }
+            var claim = principal.FindFirst(ClaimTypes.Name);
             return claim != null ? claim.Value : null;
         }
     }

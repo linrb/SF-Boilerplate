@@ -19,7 +19,7 @@ using SF.Entitys;
 
 namespace SF.Web.Security.Converters
 {
-    public class MappingRegistration: IAutoMapperConfiguration
+    public class MappingRegistration : IAutoMapperConfiguration
     {
         public void MapperConfigurationToExpression(IMapperConfigurationExpression cfg)
         {
@@ -27,7 +27,9 @@ namespace SF.Web.Security.Converters
             cfg.CreateMap<RoleEntity, Role>().ReverseMap();
             cfg.CreateMap<UserRoleEntity, UserRoleEntity>().ReverseMap();
             cfg.CreateMap<IdentityResult, SecurityResult>().ReverseMap();
-            cfg.CreateMap<UserEntity, ApplicationUserExtended>().ReverseMap();
+            cfg.CreateMap<UserEntity, ApplicationUserExtended>()
+                .ForMember(src => src.Roles, opt => opt.Ignore())
+                .ReverseMap();
         }
     }
 }

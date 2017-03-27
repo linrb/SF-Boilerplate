@@ -6,6 +6,8 @@ using SF.Core;
 using Microsoft.EntityFrameworkCore;
 using SF.Module.SimpleData.Data;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using SF.Web.Modules;
+using SF.Core.Infrastructure.Modules;
 
 namespace SF.Module.SimpleData
 {

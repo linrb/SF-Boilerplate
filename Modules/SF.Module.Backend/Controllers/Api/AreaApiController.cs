@@ -42,7 +42,7 @@ namespace SF.Module.Backend.Controllers
     /// </summary>
     [Authorize]
     [Route("Api/Area/")]
-    public class AreaApiController : CrudControllerBase<AreaEntity, AreaViewModel>
+    public class AreaApiController : CrudControllerBase<AreaEntity, AreaViewModel,long>
     {
         private readonly IMediator _mediator;
         private readonly IAreaService _areaService;
@@ -64,7 +64,7 @@ namespace SF.Module.Backend.Controllers
         /// 新增后
         /// </summary>
         /// <param name="arg"></param>
-        protected override void OnAfterAdd(CrudEventArgs<AreaEntity, AreaViewModel> arg)
+        protected override void OnAfterAdd(CrudEventArgs<AreaEntity, AreaViewModel, long> arg)
         {
             this._mediator.Publish(new EntityCreatedEventData<AreaEntity>(arg.Entity));
         }
@@ -72,7 +72,7 @@ namespace SF.Module.Backend.Controllers
         /// 编辑后
         /// </summary>
         /// <param name="arg"></param>
-        protected override void OnAfterEdit(CrudEventArgs<AreaEntity, AreaViewModel> arg)
+        protected override void OnAfterEdit(CrudEventArgs<AreaEntity, AreaViewModel, long> arg)
         {
             this._mediator.Publish(new EntityUpdatedEventData<AreaEntity>(arg.Entity));
         }
@@ -80,7 +80,7 @@ namespace SF.Module.Backend.Controllers
         /// 删除后
         /// </summary>
         /// <param name="arg"></param>
-        protected override void OnAfterDeletet(CrudEventArgs<AreaEntity, AreaViewModel> arg)
+        protected override void OnAfterDeletet(CrudEventArgs<AreaEntity, AreaViewModel, long> arg)
         {
             this._mediator.Publish(new EntityDeletedEventData<AreaEntity>(arg.Entity));
         }

@@ -12,6 +12,8 @@ using SF.Module.Localization.Data;
 using SF.Data;
 using SF.Core.Interceptors;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using SF.Web.Modules;
+using SF.Core.Infrastructure.Modules;
 
 namespace SF.Module.Localization
 {

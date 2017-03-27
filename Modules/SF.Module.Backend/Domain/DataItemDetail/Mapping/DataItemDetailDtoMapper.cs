@@ -15,7 +15,7 @@ namespace SF.Module.Backend.Domain.DataItemDetail.Mapping
     /// 字典映射
     /// 一般默认集成基础类BaseCrudDtoMapper，如特殊要求请继承CrudDtoMapper
     /// </summary>
-    public class DataItemDetailDtoMapper : BaseCrudDtoMapper<DataItemDetailEntity, DataItemDetailViewModel>
+    public class DataItemDetailDtoMapper : BaseCrudDtoMapper<DataItemDetailEntity, DataItemDetailViewModel, long>
     {
 
     }

@@ -15,7 +15,7 @@ namespace SF.Core.Interceptors
     {
         private readonly ISiteContext _siteContext;
 
-        public AuditableSiteInterceptor(ISiteContext siteContext)
+        public AuditableSiteInterceptor(SiteContext siteContext)
         {
             _siteContext = siteContext;
         }

@@ -11,6 +11,8 @@ using SF.Module.Backend.Services;
 using SF.Module.Backend.Services.Implementation;
 using System;
 using System.Collections.Generic;
+using SF.Web.Modules;
+using SF.Core.Infrastructure.Modules;
 
 namespace SF.Module.Backend
 {

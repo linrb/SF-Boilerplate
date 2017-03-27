@@ -1,4 +1,5 @@
 ﻿
+using SF.Core.Infrastructure.Modules;
 using System.Collections.Generic;
 using System.Reflection;
 

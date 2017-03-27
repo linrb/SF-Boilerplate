@@ -34,7 +34,7 @@ namespace SF.Module.Backend.Controllers
     /// </summary>
     [Authorize]
     [Route("Api/DataItemDetail/")]
-    public class DataItemDetailApiController : CrudControllerBase<DataItemDetailEntity, DataItemDetailViewModel>
+    public class DataItemDetailApiController : CrudControllerBase<DataItemDetailEntity, DataItemDetailViewModel, long>
     {
         private readonly IMediator _mediator;
         private readonly IDataItemDetailService _dataItemService;

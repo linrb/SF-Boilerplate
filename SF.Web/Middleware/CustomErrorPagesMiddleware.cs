@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using SF.Core;
+using SF.Web.Extensions;
 
 namespace SF.Web.Middleware
 {
@@ -39,7 +40,7 @@ namespace SF.Web.Middleware
                 try
                 {
                     context.Response.Clear();
-                    context.Response.StatusCode = 500;
+                    context.Response.StatusCode = ex.GetStatusCode(context);
                     return;
                 }
                 catch (Exception ex2)

@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Serilog.Extensions.Logging" Version="1.4.0" />
+    <PackageReference Include="Serilog.Sinks.Literate" Version="2.1.0" />
+    <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\SF.Core\SF.Core.csproj" />
     <ProjectReference Include="..\..\SF.Data\SF.Data.csproj" />
     <ProjectReference Include="..\..\SF.Entitys\SF.Entitys.csproj" />

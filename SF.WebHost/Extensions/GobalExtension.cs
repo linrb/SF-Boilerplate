@@ -43,7 +43,6 @@ using SF.Core.EFCore.UoW;
 using SF.Core.Common.Message.Email;
 using SF.Core.Common.Message.Sms;
 using SF.Core.EFCore.Repository;
-using SF.Web.Api.JsonConverters;
 using SF.Core.Common.Razor;
 using SF.Web.Base.Business;
 using SF.Core.Errors;
@@ -62,12 +61,16 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using SF.Web.Security.Filters;
 using SF.Web.Security.Attributes;
 using SF.Web;
-using SF.Core.Abstraction.Service;
+using SF.Core.Abstraction.GenericServices;
 using SF.Web.Security.AuthorizationHandlers.Custom;
 using SF.Core.Storage;
 using SF.Web.Site;
 using SF.Web.Site.Implementation;
 using SF.Web.Extensions;
+using SF.Core.Json.JsonConverters;
+using SF.Core.Infrastructure.Modules;
+using SF.Core.Infrastructure.Modules.Builder;
+using SF.Web.Modules;
 
 namespace SF.WebHost
 {
@@ -196,16 +199,21 @@ namespace SF.WebHost
                 configure.Cookies.ApplicationCookie.AutomaticAuthenticate = true;
                 configure.Cookies.ApplicationCookie.AutomaticChallenge = true;
             })
-              .AddRoleStore<SimplRoleStore>()
-              .AddUserStore<SimplUserStore>()
+              .AddRoleStore<SimpleRoleStore>()
+              .AddUserStore<SimpleUserStore>()
              .AddDefaultTokenProviders();
             services.AddTransient(typeof(IEFCoreQueryableRepository<>), typeof(EFCoreBaseRepository<>));
             services.AddTransient(typeof(IEFCoreQueryableRepository<,>), typeof(EFCoreBaseRepository<,>));
 
             services.TryAddScoped<ICoreTableNames, CoreTableNames>();
-            services.AddSingleton<IInterceptor, AuditableInterceptor>();
+            services.AddSingleton<IInterceptor, AuditableCreateInterceptor>();
+            services.AddSingleton<IInterceptor, AuditableDeleteInterceptor>();
+            services.AddSingleton<IInterceptor, AuditableUpdateInterceptor>();
+            services.AddSingleton<IInterceptor, AuditableSiteInterceptor>();
+
             services.AddSingleton<IBaseUnitOfWork, BaseUnitOfWork>();
-            services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>)); 
+            services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddTransient(typeof(IBaseRepository<,>), typeof(BaseRepository<,>));
             services.AddSingleton<IUnitOfWork>(sp => sp.GetService<IBaseUnitOfWork>());
             services.AddSingleton<IUnitOfWorkFactory>(uow => new UnitOfWorkFactory(services.BuildServiceProvider()));
             #endregion
@@ -234,7 +242,7 @@ namespace SF.WebHost
             //EF Core二级缓存
             //services.AddEFSecondLevelCache();
             services.AddSingleton(typeof(ICacheManager<>), typeof(BaseCacheManager<>));
-          
+
             services.AddCacheManagerConfiguration(configurationRoot, cfg => cfg.WithMicrosoftLogging(services));
             #endregion
 
@@ -262,10 +270,10 @@ namespace SF.WebHost
                 .AddClasses(classes => classes.AssignableTo(typeof(IRules<>)))
                 .AsImplementedInterfaces()
                 .WithTransientLifetime()
-                .AddClasses(classes => classes.AssignableTo(typeof(ICrudDtoMapper<,>)))
+                .AddClasses(classes => classes.AssignableTo(typeof(ICrudDtoMapper<,,>)))
                 .AsImplementedInterfaces()
                 .WithTransientLifetime()
-                .AddClasses(classes => classes.AssignableTo(typeof(IBaseService)))
+                .AddClasses(classes => classes.AssignableTo(typeof(IServiceBase)))
                 .AsImplementedInterfaces()
                 .WithTransientLifetime());
 
@@ -277,6 +285,8 @@ namespace SF.WebHost
             //services.AddPlugins();
             //services.AddPluginManager(configurationRoot, hostingEnvironment);
             #endregion
+
+            services.AddModules();
 
             #region Swagger
 
@@ -331,9 +341,9 @@ namespace SF.WebHost
                 opts.SerializerSettings.Converters.Add(new GuidConverter());
                 opts.SerializerSettings.Formatting = Formatting.None;
             });
-            foreach (var module in ExtensionManager.Modules)
-                // Register controller from modules
-                mvcBuilder.AddApplicationPart(module.Assembly);
+            //foreach (var module in ExtensionManager.Modules)
+            //    // Register controller from modules
+            //    mvcBuilder.AddApplicationPart(module.Assembly);
 
             mvcBuilder.AddRazorOptions(
               o =>
@@ -630,13 +640,14 @@ namespace SF.WebHost
         {
             UseCustomizedHangfire(applicationBuilder);
             #region Securitys
-          applicationBuilder.UseSecurity();
+            applicationBuilder.UseSecurity();
             #endregion
 
             #region Plugin
             //applicationBuilder.UseMvcWithPlugin();
             //applicationBuilder.AddPluginCustomizedMvc();
             #endregion
+            applicationBuilder.AddmoduleCustomizedMvc(configurationRoot, hostingEnvironment);
 
         }
 

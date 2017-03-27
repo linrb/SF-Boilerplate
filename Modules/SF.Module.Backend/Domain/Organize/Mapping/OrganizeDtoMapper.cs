@@ -13,7 +13,7 @@ namespace SF.Module.Backend.Domain.Organize.Mapping
     /// <summary>
     /// 区域映射
     /// </summary>
-    public class OrganizeDtoMapper : BaseCrudDtoMapper<OrganizeEntity, OrganizeViewModel>
+    public class OrganizeDtoMapper : BaseCrudDtoMapper<OrganizeEntity, OrganizeViewModel, long>
     {
 
     }

@@ -38,7 +38,7 @@ namespace SF.Module.Backend.Controllers
     /// </summary>
     [Authorize]
     [Route("Api/DataItem/")]
-    public class DataItemApiController : CrudControllerBase<DataItemEntity, DataItemViewModel>
+    public class DataItemApiController : CrudControllerBase<DataItemEntity, DataItemViewModel, long>
     {
         private readonly IMediator _mediator;
         private readonly IDataItemService _dataItemService;
@@ -73,7 +73,7 @@ namespace SF.Module.Backend.Controllers
         /// 新增后
         /// </summary>
         /// <param name="arg"></param>
-        protected override void OnAfterAdd(CrudEventArgs<DataItemEntity, DataItemViewModel> arg)
+        protected override void OnAfterAdd(CrudEventArgs<DataItemEntity, DataItemViewModel, long> arg)
         {
             this._mediator.Publish(new EntityCreatedEventData<DataItemEntity>(arg.Entity));
         }
@@ -81,7 +81,7 @@ namespace SF.Module.Backend.Controllers
         /// 编辑后
         /// </summary>
         /// <param name="arg"></param>
-        protected override void OnAfterEdit(CrudEventArgs<DataItemEntity, DataItemViewModel> arg)
+        protected override void OnAfterEdit(CrudEventArgs<DataItemEntity, DataItemViewModel, long> arg)
         {
             this._mediator.Publish(new EntityUpdatedEventData<DataItemEntity>(arg.Entity));
         }
@@ -89,7 +89,7 @@ namespace SF.Module.Backend.Controllers
         /// 删除后
         /// </summary>
         /// <param name="arg"></param>
-        protected override void OnAfterDeletet(CrudEventArgs<DataItemEntity, DataItemViewModel> arg)
+        protected override void OnAfterDeletet(CrudEventArgs<DataItemEntity, DataItemViewModel, long> arg)
         {
             this._mediator.Publish(new EntityDeletedEventData<DataItemEntity>(arg.Entity));
         }

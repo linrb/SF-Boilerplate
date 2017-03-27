@@ -45,7 +45,7 @@ namespace SF.Module.Backend.Controllers
     /// </summary>
     [Authorize]
     [Route("Api/Department/")]
-    public class DepartmentApiController : CrudControllerBase<DepartmentEntity, DepartmentViewModel>
+    public class DepartmentApiController : CrudControllerBase<DepartmentEntity, DepartmentViewModel, long>
     {
         private readonly IMediator _mediator;
         private readonly IOrganizeService _organizeService;
@@ -75,7 +75,7 @@ namespace SF.Module.Backend.Controllers
         /// 新增后
         /// </summary>
         /// <param name="arg"></param>
-        protected override void OnAfterAdd(CrudEventArgs<DepartmentEntity, DepartmentViewModel> arg)
+        protected override void OnAfterAdd(CrudEventArgs<DepartmentEntity, DepartmentViewModel, long> arg)
         {
             this._mediator.Publish(new EntityCreatedEventData<DepartmentEntity>(arg.Entity));
         }
@@ -83,7 +83,7 @@ namespace SF.Module.Backend.Controllers
         /// 编辑后
         /// </summary>
         /// <param name="arg"></param>
-        protected override void OnAfterEdit(CrudEventArgs<DepartmentEntity, DepartmentViewModel> arg)
+        protected override void OnAfterEdit(CrudEventArgs<DepartmentEntity, DepartmentViewModel, long> arg)
         {
             this._mediator.Publish(new EntityUpdatedEventData<DepartmentEntity>(arg.Entity));
         }
@@ -91,7 +91,7 @@ namespace SF.Module.Backend.Controllers
         /// 删除后
         /// </summary>
         /// <param name="arg"></param>
-        protected override void OnAfterDeletet(CrudEventArgs<DepartmentEntity, DepartmentViewModel> arg)
+        protected override void OnAfterDeletet(CrudEventArgs<DepartmentEntity, DepartmentViewModel, long> arg)
         {
             this._mediator.Publish(new EntityDeletedEventData<DepartmentEntity>(arg.Entity));
         }

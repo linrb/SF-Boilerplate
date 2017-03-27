@@ -27,14 +27,14 @@ namespace SF.Module.Backend.Domain.Module.Mapping
         public void MapperConfigurationToExpression(IMapperConfigurationExpression cfg)
         {
             cfg.CreateMap<ModuleViewModel, ModuleEntity>()
-                .MapperExpressCreatedMeta()
-                .MapperExpressUpdatedMeta()
-                .MapperExpressDeleteMeta()
+                .MapperExpressCreatedMeta<ModuleViewModel, ModuleEntity, long>()
+                .MapperExpressUpdatedMeta<ModuleViewModel, ModuleEntity, long>()
+                .MapperExpressDeleteMeta<ModuleViewModel, ModuleEntity, long>()
                 .ReverseMap();
             cfg.CreateMap<PermissionViemModel, PermissionEntity>()
-               .MapperExpressCreatedMeta()
-               .MapperExpressUpdatedMeta()
-               .MapperExpressDeleteMeta()
+               .MapperExpressCreatedMeta<PermissionViemModel, PermissionEntity, long>()
+               .MapperExpressUpdatedMeta<PermissionViemModel, PermissionEntity, long>()
+               .MapperExpressDeleteMeta<PermissionViemModel, PermissionEntity, long>()
                .ReverseMap();
 
         }

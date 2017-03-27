@@ -1,4 +1,4 @@
-﻿using SF.Core.Abstraction.Service;
+﻿using SF.Core.Abstraction.GenericServices;
 using SF.Entitys;
 using SF.Entitys.Abstraction.Pages;
 using SF.Module.Backend.Data.Entitys;
@@ -13,7 +13,7 @@ namespace SF.Module.Backend.Domain.Department.Service
     /// <summary>
     /// 扩展的服务处理类
     /// </summary>
-    public interface IDepartmentService : IBaseService
+    public interface IDepartmentService : IServiceBase
     {
         Task<List<DepartmentEntity>> GetAlls();
         Task<IList<DepartmentEntity>> QueryFilterByParentId(long parentId);

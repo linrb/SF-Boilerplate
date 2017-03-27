@@ -15,10 +15,11 @@ using SF.Module.Backend.Data.Uow;
 using SF.Core.Abstraction.UoW.Helper;
 using Z.EntityFramework.Plus;
 using SF.Data;
+using SF.Core.Abstraction.GenericServices;
 
 namespace SF.Module.Backend.Domain.Role.Service
 {
-    public class RoleService : IRoleService
+    public class RoleService : ServiceBase, IRoleService
     {
         #region Fields
         private readonly ICacheManager<object> _cacheManager;

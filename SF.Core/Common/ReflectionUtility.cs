@@ -54,8 +54,21 @@ namespace SF.Core.Common
 			return propertyInfo.GetCustomAttributes(attribute, true).Any();
 		}
 
-	
-		public static Type[] GetTypeInheritanceChain(this Type type)
+        public static bool GetAttribute(this PropertyInfo propertyInfo, Type attribute)
+        {
+            return propertyInfo.GetCustomAttributes(attribute, true).Any();
+        }
+
+        public static List<object> GetAttributesOfDeclaringType(this Type type)
+        {
+            var attributeList = new List<object>();
+
+            attributeList.AddRange(type.GetTypeInfo().GetCustomAttributes());
+
+            return attributeList;
+        }
+
+        public static Type[] GetTypeInheritanceChain(this Type type)
 		{
 			var retVal = new List<Type>();
 

@@ -15,6 +15,11 @@ using AutoMapper;
 using SF.Core.StartupTask;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using SF.Core.Extensions;
+using StackExchange.Profiling.Mvc;
+using StackExchange.Profiling;
+using StackExchange.Profiling.Storage;
+using Microsoft.Extensions.Caching.Memory;
+using SF.Core.Infrastructure.Modules;
 
 namespace SF.WebHost
 {
@@ -74,6 +79,7 @@ namespace SF.WebHost
         public void ConfigureServices(IServiceCollection services)
         {
 
+
             this.DiscoverAssemblies();
 
             simpleGlobal.GlobalConfiguration.WebRootPath = _hostingEnvironment.WebRootPath;
@@ -122,9 +128,15 @@ namespace SF.WebHost
 
             var sfStarter = serviceProvider.GetService<ISFStarter>();
             sfStarter.Run();
+
+
+            if (_hostingEnvironment.IsDevelopment())
+            {
+                services.AddMiniProfiler();
+            }
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IMemoryCache cache)
         {
             //  loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             // loggerFactory.AddDebug();
@@ -134,6 +146,12 @@ namespace SF.WebHost
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
                 //  app.UseDatabaseErrorPage();
+                app.UseMiniProfiler(new MiniProfilerOptions
+                {
+                    RouteBasePath = "~/profiler",
+                    SqlFormatter = new StackExchange.Profiling.SqlFormatters.InlineFormatter(),
+                    Storage = new MemoryCacheStorage(cache, TimeSpan.FromMinutes(60))
+                });
             }
 
             foreach (Action<IApplicationBuilder> prioritizedConfigureAction in this.GetPrioritizedConfigureActions())
@@ -162,10 +180,7 @@ namespace SF.WebHost
               string.IsNullOrEmpty(extensionsPath) ?
                 null : this.serviceProvider.GetService<IHostingEnvironment>().ContentRootPath + extensionsPath);
             ExtensionManager.SetModules(modules.ToList());
-            //添加全局模块
-           // ExtensionManager.SetExtension(new GobalExtension());
-
-            Console.WriteLine(modules.ToList().Count);
+            
         }
 
         /// <summary>

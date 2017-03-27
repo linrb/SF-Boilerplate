@@ -27,5 +27,10 @@ namespace SF.Web.Security.AuthorizationHandlers.Custom
         {
             Permissions = permissions;
         }
+        public SFMvcAuthorizeAttribute(bool requireAppPermission,params string[] permissions)
+        {
+            Permissions = permissions;
+            RequireAllPermissions = requireAppPermission;
+        }
     }
 }

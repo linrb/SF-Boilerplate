@@ -28,9 +28,9 @@ namespace SF.Module.Backend.Domain.DataItemDetail.Mapping
             
 
             cfg.CreateMap<DataItemDetailViewModel, DataItemDetailEntity>()
-              .MapperExpressCreatedMeta()
-              .MapperExpressUpdatedMeta()
-              .MapperExpressDeleteMeta()
+              .MapperExpressCreatedMeta<DataItemDetailViewModel, DataItemDetailEntity,long>()
+              .MapperExpressUpdatedMeta<DataItemDetailViewModel, DataItemDetailEntity, long>()
+              .MapperExpressDeleteMeta<DataItemDetailViewModel, DataItemDetailEntity, long>()
               .ReverseMap();
  
         }

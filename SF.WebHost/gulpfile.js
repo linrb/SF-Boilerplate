@@ -14,7 +14,8 @@ var modules = [
     'SF.Module.LoggingStorage',
     'SF.Module.Backend',
     'SF.Module.Localization',
-    'SF.Module.Demo'
+    'SF.Module.Demo',
+    'SF.Module.Blog'
 ];
 
 gulp.task('clean-module', function () {
@@ -33,9 +34,8 @@ gulp.task('copy-modules', ['clean-module'], function () {
             .pipe(gulp.dest(paths.hostModules + module + '/bin'));
         gulp.src(paths.devModules + module + '/bin/Debug/netcoreapp1.1/**/' + module + '.*')
             .pipe(gulp.dest(paths.hostModules + module + '/bin'));
-
+        gulp.src(paths.devModules + module + '/module.json')
+            .pipe(gulp.dest(paths.hostModules + module));
     });
 
-    //gulp.src(paths.devModules + 'SF.Module.SampleData/SampleContent/**/*.*')
-    //        .pipe(gulp.dest(paths.hostModules + 'SF.Module.SampleData/SampleContent'));
 });

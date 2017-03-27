@@ -45,7 +45,7 @@ namespace SF.Web.Security
         {
             var retVal = new List<string>();
 
-            retVal.Add(Id.ToString());
+            retVal.Add(Name.ToString());
 
             return retVal;
         }

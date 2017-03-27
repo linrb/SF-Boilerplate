@@ -13,7 +13,7 @@ namespace SF.Module.Backend.Domain.User.Mapping
     /// <summary>
     /// 映射
     /// </summary>
-    public class UserDtoMapper : BaseCrudDtoMapper<UserEntity, UserViewModel>
+    public class UserDtoMapper : BaseCrudDtoMapper<UserEntity, UserViewModel, long>
     {
 
     }

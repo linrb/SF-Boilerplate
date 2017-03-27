@@ -1,9 +1,9 @@
-﻿using SF.Core.Abstraction.Service;
+﻿using SF.Core.Abstraction.GenericServices;
 using SF.Entitys;
 
 namespace SF.Module.Backend.Services
 {
-    public interface IUrlSlugService : IBaseService
+    public interface IUrlSlugService : IServiceBase
     {
         UrlSlugEntity Get(long entityId, long entityTypeId);
 

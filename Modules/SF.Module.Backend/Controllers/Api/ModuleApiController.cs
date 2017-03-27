@@ -43,7 +43,7 @@ namespace SF.Module.Backend.Controllers
     /// </summary>
     [Authorize]
     [Route("Api/Module/")]
-    public class ModuleApiController : CrudControllerBase<ModuleEntity, ModuleViewModel>
+    public class ModuleApiController : CrudControllerBase<ModuleEntity, ModuleViewModel, long>
     {
         private readonly IMediator _mediator;
         private readonly IModuleService _moduleService;
@@ -65,7 +65,7 @@ namespace SF.Module.Backend.Controllers
         /// 新增后
         /// </summary>
         /// <param name="arg"></param>
-        protected override void OnAfterAdd(CrudEventArgs<ModuleEntity, ModuleViewModel> arg)
+        protected override void OnAfterAdd(CrudEventArgs<ModuleEntity, ModuleViewModel, long> arg)
         {
             this._mediator.Publish(new EntityCreatedEventData<ModuleEntity>(arg.Entity));
         }
@@ -73,7 +73,7 @@ namespace SF.Module.Backend.Controllers
         /// 编辑后
         /// </summary>
         /// <param name="arg"></param>
-        protected override void OnAfterEdit(CrudEventArgs<ModuleEntity, ModuleViewModel> arg)
+        protected override void OnAfterEdit(CrudEventArgs<ModuleEntity, ModuleViewModel, long> arg)
         {
             this._mediator.Publish(new EntityUpdatedEventData<ModuleEntity>(arg.Entity));
         }
@@ -81,7 +81,7 @@ namespace SF.Module.Backend.Controllers
         /// 删除后
         /// </summary>
         /// <param name="arg"></param>
-        protected override void OnAfterDeletet(CrudEventArgs<ModuleEntity, ModuleViewModel> arg)
+        protected override void OnAfterDeletet(CrudEventArgs<ModuleEntity, ModuleViewModel, long> arg)
         {
             this._mediator.Publish(new EntityDeletedEventData<ModuleEntity>(arg.Entity));
         }

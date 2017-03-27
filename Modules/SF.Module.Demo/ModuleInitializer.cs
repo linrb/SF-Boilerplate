@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using SF.Core;
 using SF.Core.Abstraction.UI.Backends;
+using SF.Core.Infrastructure.Modules;
+using SF.Web.Modules;
 using SF.Web.Security;
 using System;
 using System.Collections.Generic;

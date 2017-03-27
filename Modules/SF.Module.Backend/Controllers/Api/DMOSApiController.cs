@@ -46,7 +46,7 @@ namespace SF.Module.Backend.Controllers
     /// </summary>
     [Authorize]
     [Route("Api/DMOS/")]
-    public class DMOSApiController : CrudControllerBase<DMOSEntity, DMOSViewModel>
+    public class DMOSApiController : CrudControllerBase<DMOSEntity, DMOSViewModel, long>
     {
         private readonly IMediator _mediator;
         private readonly IDMOSService _dmosService;
@@ -79,7 +79,7 @@ namespace SF.Module.Backend.Controllers
         /// 新增后
         /// </summary>
         /// <param name="arg"></param>
-        protected override void OnAfterAdd(CrudEventArgs<DMOSEntity, DMOSViewModel> arg)
+        protected override void OnAfterAdd(CrudEventArgs<DMOSEntity, DMOSViewModel, long> arg)
         {
             this._mediator.Publish(new EntityCreatedEventData<DMOSEntity>(arg.Entity));
         }
@@ -87,7 +87,7 @@ namespace SF.Module.Backend.Controllers
         /// 编辑后
         /// </summary>
         /// <param name="arg"></param>
-        protected override void OnAfterEdit(CrudEventArgs<DMOSEntity, DMOSViewModel> arg)
+        protected override void OnAfterEdit(CrudEventArgs<DMOSEntity, DMOSViewModel, long> arg)
         {
             this._mediator.Publish(new EntityUpdatedEventData<DMOSEntity>(arg.Entity));
         }
@@ -95,7 +95,7 @@ namespace SF.Module.Backend.Controllers
         /// 删除后
         /// </summary>
         /// <param name="arg"></param>
-        protected override void OnAfterDeletet(CrudEventArgs<DMOSEntity, DMOSViewModel> arg)
+        protected override void OnAfterDeletet(CrudEventArgs<DMOSEntity, DMOSViewModel, long> arg)
         {
             this._mediator.Publish(new EntityDeletedEventData<DMOSEntity>(arg.Entity));
         }

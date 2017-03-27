@@ -22,12 +22,16 @@ namespace SF.Web.Models
 
 
     }
+    public abstract partial class EntityModelBase<TKey> : ModelBase
+    {
+        public virtual TKey Id { get; set; }
+
+    }
     /// <summary>
     /// 模型基类
     /// </summary>
-    public abstract partial class EntityModelBase : ModelBase
+    public abstract partial class EntityModelBase : EntityModelBase<long>
     {
-        public virtual long Id { get; set; }
         /// <summary>
         /// 排序码
         /// </summary>

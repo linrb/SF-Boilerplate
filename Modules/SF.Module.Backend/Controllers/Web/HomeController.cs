@@ -95,5 +95,21 @@ namespace SF.Module.Backend.Controllers
 
             return View();
         }
+
+        public ActionResult NotFoundError()
+        {
+             
+            return View();
+        }
+        public ActionResult InternalError()
+        {
+
+            return View();
+        }
+        public ActionResult AccessDenied()
+        {
+
+            return View();
+        }
     }
 }

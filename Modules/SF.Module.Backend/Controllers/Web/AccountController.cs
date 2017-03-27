@@ -118,7 +118,7 @@ namespace SF.Module.Backend.Controllers
         {
             ViewData["ReturnUrl"] = returnUrl;
 
-            var user = new UserEntity { UserName = model.Email, Email = model.Email,  DisplayName = model.FullName, SiteId = _siteContext.Id };
+            var user = new UserEntity { UserName = model.Email, Email = model.Email, DisplayName = model.FullName, SiteId = _siteContext.Id };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
@@ -452,6 +452,13 @@ namespace SF.Module.Backend.Controllers
             }
         }
 
+
+        [AllowAnonymous]
+        public IActionResult Forbidden()
+        {
+
+            return View();
+        }
         #region Helpers
 
         private string AddErrors(IdentityResult result)

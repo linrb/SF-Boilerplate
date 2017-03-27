@@ -16,13 +16,14 @@ using SF.Entitys.Abstraction.Pages;
 using Microsoft.EntityFrameworkCore;
 using SF.Module.Backend.Data.Entitys;
 using SF.Module.Backend.Data.Uow;
+using SF.Core.Abstraction.GenericServices;
 
 namespace SF.Module.Backend.Domain.DataItem.Service
 {
-    public class DataItemService : IDataItemService
+    public class DataItemService : ServiceBase, IDataItemService
     {
         #region Fields
-        private readonly ICrudDtoMapper<DataItemEntity, DataItemViewModel> _curdDtoMapper;
+        private readonly ICrudDtoMapper<DataItemEntity, DataItemViewModel, long> _curdDtoMapper;
         private readonly ICacheManager<object> _cacheManager;
         private readonly IBackendUnitOfWork _backendUnitOfWork;
         #endregion
@@ -30,7 +31,7 @@ namespace SF.Module.Backend.Domain.DataItem.Service
         #region Constructors
         public DataItemService(IBackendUnitOfWork backendUnitOfWork,
             ICacheManager<object> cacheManager,
-            ICrudDtoMapper<DataItemEntity, DataItemViewModel> curdDtoMapper)
+            ICrudDtoMapper<DataItemEntity, DataItemViewModel, long> curdDtoMapper)
         {
             _backendUnitOfWork = backendUnitOfWork;
             _cacheManager = cacheManager;

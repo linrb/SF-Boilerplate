@@ -22,6 +22,9 @@ using SF.Module.Backend.Domain.User.Rule;
 using SF.Core.Errors.Exceptions;
 using System.Collections.Generic;
 using SF.Core.Extensions;
+using SF.Core.Abstraction.Resolvers;
+using SF.Entitys.Abstraction;
+using LinqKit;
 
 namespace SF.Module.Backend.Controllers
 {
@@ -33,18 +36,21 @@ namespace SF.Module.Backend.Controllers
         private readonly IBaseUnitOfWork _baseUnitOfWork;
         private readonly ISecurityService _securityService;
         private readonly IUserRules _userRules;
-        private ICrudDtoMapper<UserEntity, UserViewModel> _crudDtoMapper;
+        private readonly IUserNameResolver _userNameResolver;
+        private ICrudDtoMapper<UserEntity, UserViewModel, long> _crudDtoMapper;
         public UserApiController(IBaseUnitOfWork baseUnitOfWork,
             UserManager<UserEntity> userManager,
             IUserRules userRules,
             ISecurityService securityService,
+            IUserNameResolver userNameResolver,
             IServiceCollection service,
             ILogger<UserApiController> logger,
-            ICrudDtoMapper<UserEntity, UserViewModel> crudDtoMapper) : base(service, logger)
+            ICrudDtoMapper<UserEntity, UserViewModel, long> crudDtoMapper) : base(service, logger)
         {
             this._baseUnitOfWork = baseUnitOfWork;
             this._userManager = userManager;
             this._userRules = userRules;
+            this._userNameResolver = userNameResolver;
             this._securityService = securityService;
             this._crudDtoMapper = crudDtoMapper;
         }
@@ -94,7 +100,34 @@ namespace SF.Module.Backend.Controllers
         [Route("GetPageListJson")]
         public IActionResult GetPageListJson(JqGridRequest request, string condition, string keyword)
         {
-            var data = _userManager.Users;
+
+            var predicate = PredicateBuilder.New<UserEntity>(true);
+
+            #region 多条件查询
+            if (!keyword.IsEmpty())
+            {
+                switch (condition)
+                {
+                    case "Account":            //账户
+                        predicate.And(t => t.UserName.Contains(keyword));
+                        break;
+                    case "RealName":          //姓名
+                        predicate.And(t => t.DisplayName.Contains(keyword));
+                        break;
+                    case "Mobile":          //手机
+                        predicate.And(t => t.Mobile.Contains(keyword));
+                        break;
+                    default:
+                        break;
+
+                }
+            }
+            #endregion
+             var data = _userManager.Users.Where(predicate);
+            if (request.RecordsCount != 0)
+            {
+                data = data.Skip(request.PageIndex * request.RecordsCount).Take(request.RecordsCount);
+            }
             var dtos = this._crudDtoMapper.MapEntityToDtos(data);
             JqGridResponse response = new JqGridResponse();
             foreach (UserViewModel userInput in dtos)
@@ -152,7 +185,8 @@ namespace SF.Module.Backend.Controllers
             try
             {
                 var entity = _crudDtoMapper.MapDtoToEntity(model);
-
+                entity.DefaultCreate(this._userNameResolver.GetCurrentUserName());
+                entity.DefaultUpdate(this._userNameResolver.GetCurrentUserName());
                 var insertedEntity = await _userManager.CreateAsync(entity, model.Password);
 
                 return Success("更新成功!");
@@ -202,6 +236,7 @@ namespace SF.Module.Backend.Controllers
                 entity.WorkGroupId = model.WorkGroupId;
                 entity.Description = model.Description;
 
+                entity.DefaultUpdate(this._userNameResolver.GetCurrentUserName());
                 await _userManager.UpdateAsync(entity);
 
                 return Success("updated success");

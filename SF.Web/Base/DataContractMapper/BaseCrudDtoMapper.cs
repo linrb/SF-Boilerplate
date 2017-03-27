@@ -9,9 +9,9 @@ namespace SF.Web.Base.DataContractMapper
     /// <summary>
     /// 数据映射自动映射基类的ID、创建、修改日期
     /// </summary>
-    public class BaseCrudDtoMapper<TEntity, TDto> : CrudDtoMapper<TEntity, TDto>
-       where TEntity : IEntityWithTypedId<long>, new()
-       where TDto : EntityModelBase, new()
+    public class BaseCrudDtoMapper<TEntity, TDto, Tkey> : CrudDtoMapper<TEntity, TDto, Tkey>
+       where TEntity : IEntityWithTypedId<Tkey>, new()
+       where TDto : EntityModelBase<Tkey>, new()
     {
         /// <summary>
         /// DTO转换领域的实体映射

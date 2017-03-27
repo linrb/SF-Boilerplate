@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SF.Entitys
 {
-    public class UserEntity : IdentityUser<long, IdentityUserClaim<long>, UserRoleEntity, IdentityUserLogin<long>>, IEntityWithTypedId<long>, IUserInfo, IHaveCreatedMeta<string>, IHaveUpdatedMeta<string>, IHaveDeletedMeta<string>,IMustHaveSite
+    public class UserEntity : IdentityUser<long, IdentityUserClaim<long>, UserRoleEntity, IdentityUserLogin<long>>, IEntityWithTypedId<long>, IUserInfo, IHaveCreatedMeta, IHaveUpdatedMeta, IHaveDeletedMeta,IMustHaveSite
     {
         public UserEntity()
         {

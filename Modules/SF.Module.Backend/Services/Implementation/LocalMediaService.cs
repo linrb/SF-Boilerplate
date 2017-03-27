@@ -6,10 +6,11 @@ using SF.Data;
 using SF.Core.Abstraction.UoW;
 using SF.Core.Abstraction.UoW.Helper;
 using SF.Core;
+using SF.Core.Abstraction.GenericServices;
 
 namespace SF.Module.Backend.Services.Implementation
 {
-    public class LocalMediaService : IMediaService
+    public class LocalMediaService : ServiceBase, IMediaService
     {
         private const string MediaRootFoler = "user-content";
 
